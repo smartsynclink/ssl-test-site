@@ -1,0 +1,4 @@
+allowBuilds:
+  esbuild: true  # required by Sanity Studio; its build script installs esbuild's own binary
+  sharp: false
+  unrs-resolver: false

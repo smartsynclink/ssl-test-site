@@ -1,26 +1,90 @@
-@import "tailwindcss";
+/* site.css is generated from the live site by scripts/build-css.py — do not
+   edit it by hand. Overrides that belong to the Next build go here. */
+@import "./site.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Bind the original font stacks to the self-hosted next/font faces. */
+  --font-display: var(--font-fraunces), "Fraunces", serif;
+  --font-body: var(--font-outfit), "Outfit", sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* The authored stylesheet silently relies on GoHighLevel's platform reset,
+   which is not part of the code block we ported. Without these, headings fall
+   back to the UA default of 700 and render noticeably heavier than the live
+   site. Verified against the platform sheet on the live page. */
+h1, h2, h3, h4, h5, h6 { font-weight: 500; }
+body { -moz-osx-font-smoothing: grayscale; }
+
+/* The page canvas is white, not --bg. On the live site GoHighLevel paints a
+   fixed, full-viewport, z-index:-1 white layer (.bgCover) over the body's
+   #faf8f4, so every section without its own background reads as #ffffff.
+   --bg stays #faf8f4 for the places that ask for it explicitly: the form
+   inputs and the inner-page quote section. Verified against both
+   lumenhomeservices.com and the GHL preview. */
+body { background: #ffffff; }
+
+/* Services mega-menu alignment.
+   The original centres the 1020px panel on the "Services" trigger, which sits
+   near the left of the header -- so its first column is clipped off the left
+   edge of the viewport (verified: the panel spans -129px to 891px at 1440px
+   wide on the live site too). Centring it on the header container instead
+   keeps the whole panel on screen. This is a deliberate deviation from the
+   original. The Service Areas panel is narrower and still centres on its own
+   trigger, which is correct. */
+.nav-inner { position: relative; }
+.nav-item:has(> .mega-panel) { position: static; }
+/* Making the item static also re-bases `top: 100%`, which would otherwise
+   measure from the header container (as tall as the logo) and drop the panel
+   ~41px below the Service Areas one. The triggers are vertically centred in
+   the header, so their bottom edge is half a trigger-height below its centre.
+   ponytail: --nav-trigger-h is only used here; make it a real token if the
+   header ever grows a second dropdown size. */
+.nav-inner { --nav-trigger-h: 38.5px; }  /* measured trigger height */
+.nav-item:has(> .mega-panel) > .mega-panel {
+  top: calc(50% + (var(--nav-trigger-h) / 2));
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Facades for third-party embeds that are not loaded until requested. */
+.map-placeholder {
+  width: 100%; height: 100%; min-height: 320px; display: flex;
+  align-items: center; justify-content: center; cursor: pointer;
+  background: var(--bg-alt); color: var(--text-muted); font-size: 15px;
+  border: 1px solid var(--border-soft);
+}
+.map-placeholder:hover { color: var(--text); }
+.video-play-badge {
+  position: absolute; inset: 0; margin: auto; width: 64px; height: 64px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 999px; background: rgba(255,255,255,.92); color: var(--ink);
+}
+.video-play-badge svg { width: 26px; height: 26px; margin-left: 3px; }
+
+/* Responsive alignment fixes for the ported stylesheet.
+   Each of these is a bug in site.css that cannot be fixed there, because
+   site.css is regenerated from the live site by scripts/build-css.py. */
+
+/* The consent checkbox keeps the UA default margin (2px 3px 3px 4px), so it
+   sits 4px right of the left edge every other control in the form shares, and
+   the visual gap to its label is 13px instead of the 10px .q-consent asks for.
+   Affects both form cards at every width. */
+.q-consent input { margin: 2px 0 0; }
+
+/* site.css declares responsive padding for .quote-form-card at <=700px and
+   <=560px, but the base rule is scoped .pt-landing/.pt-inner (0,2,0) and beats
+   those media-query rules (0,1,0) -- media queries add no specificity, so the
+   card keeps 44px padding all the way down. At 681px that leaves 194px of
+   usable form width against the hero card's 404px. Re-declare at matching
+   specificity so the intended values apply. */
+@media (max-width: 700px) {
+  .pt-landing .quote-form-card, .pt-inner .quote-form-card { padding: 32px; }
+}
+@media (max-width: 560px) {
+  .pt-landing .quote-form-card, .pt-inner .quote-form-card { padding: 26px; }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* The inner-page hero drops to a 20px gutter at <=640px while every other
+   section on the same page stays at 24px, so the hero copy hangs 4px left of
+   the content below it. */
+@media (max-width: 640px) {
+  .service-hero-inner { padding-left: 24px; padding-right: 24px; }
 }
