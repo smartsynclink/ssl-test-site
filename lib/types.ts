@@ -28,6 +28,8 @@ export type Settings = {
   footerContactTitle?: string;
   trustItems?: { title: string; sub?: string; icon?: string }[];
   ui?: Record<string, string>;
+  siteUrl?: string;
+  defaultSeo?: Seo;
   serviceAreasNote?: string;
   integrations?: {
     ghlFormUrl?: string; ghlFormHeight?: number; reviewsWidgetUrl?: string;
@@ -36,11 +38,13 @@ export type Settings = {
   };
 };
 
+export type Seo = { title?: string; description?: string; ogImage?: SanityImage; noIndex?: boolean };
+
 export type Section = { _key: string; _type: string; [k: string]: unknown };
 
 export type Page = {
   _id: string; title: string; slug: { current: string };
   theme: 'landing' | 'inner'; isHome?: boolean;
   sections?: Section[];
-  seo?: { title?: string; description?: string; ogImage?: SanityImage; noIndex?: boolean };
+  seo?: Seo;
 };

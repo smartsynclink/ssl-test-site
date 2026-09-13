@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import QuoteForm from './QuoteForm';
 import { Close, Phone } from './icons';
 import type { Settings } from '@/lib/types';
+import { uiText } from '@/lib/ui';
 
 /** Hashes that mean "take me to the quote form". Buttons keep them as real hrefs
  *  (e.g. /contact#quote), so a new tab or a no-JS visit still reaches a form. */
@@ -32,7 +33,7 @@ export default function QuoteModal({ settings, serviceArea, consentText, heading
     return () => document.removeEventListener('click', onClick, true);
   }, []);
 
-  const title = heading ?? settings.headerCtaLabel ?? 'Request a Quote';
+  const title = heading || settings.headerCtaLabel || uiText(settings.ui, 'stickyQuoteLabel');
   const lead = emphasis && title.endsWith(emphasis) ? title.slice(0, -emphasis.length) : title;
 
   return (
@@ -42,14 +43,14 @@ export default function QuoteModal({ settings, serviceArea, consentText, heading
       // explicit, because some embedded browsers don't turn Escape into the native close request
       onKeyDown={e => { if (e.key === 'Escape') { e.preventDefault(); dialog.current?.close(); } }}>
       <div className="quote-modal-inner">
-        <button type="button" className="quote-modal-close" aria-label="Close"
+        <button type="button" className="quote-modal-close" aria-label={uiText(settings.ui, 'closeLabel')}
           onClick={() => dialog.current?.close()}><Close /></button>
         <p className="form-title" id="quote-modal-title">
           {lead}{emphasis && title.endsWith(emphasis) && <em>{emphasis}</em>}
         </p>
         <QuoteForm settings={settings} formId="modalForm" serviceArea={serviceArea} consentText={consentText} />
         <a href={settings.phoneHref} className="quote-modal-call">
-          <Phone />{settings.ui?.stickyCallLabel ?? 'Call Now'}: {settings.phone}
+          <Phone />{uiText(settings.ui, 'stickyCallLabel')}: {settings.phone}
         </a>
       </div>
     </dialog>

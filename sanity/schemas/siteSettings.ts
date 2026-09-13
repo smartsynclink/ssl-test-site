@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity';
+import { UI_DEFAULTS } from '../../lib/ui';
 
 /**
  * Single source of truth for everything that appears on more than one page:
@@ -123,45 +124,12 @@ export default defineType({
     }),
     defineField({
       name: 'ui', title: 'Interface copy', type: 'object', group: 'nav',
-      description: 'Button labels, form placeholders and messages.',
+      description: 'Every button label, form message and screen-reader label. {tokens} are filled in automatically.',
       options: { collapsible: true, collapsed: true },
       fields: [
-        { name: 'stickyCallLabel', type: 'string', initialValue: 'Call Now' },
-        { name: 'stickyQuoteLabel', type: 'string', initialValue: 'Request a Quote' },
-        { name: 'contactPhoneLabel', type: 'string', initialValue: 'Phone' },
-        { name: 'contactEmailLabel', type: 'string', initialValue: 'Email' },
-        { name: 'contactAreaLabel', type: 'string', initialValue: 'Service Area' },
-        { name: 'contactHoursLabel', type: 'string', initialValue: 'Hours' },
-        { name: 'namePlaceholder', type: 'string', initialValue: 'Full name' },
-        { name: 'phonePlaceholder', type: 'string', initialValue: 'Phone number' },
-        { name: 'emailPlaceholder', type: 'string', initialValue: 'Email' },
-        { name: 'servicePlaceholder', type: 'string', initialValue: 'Service needed' },
-        { name: 'serviceOtherOption', type: 'string', initialValue: 'Not sure / other' },
         { name: 'consentText', type: 'text', rows: 3,
           description: 'Consent line under every quote form (modal included). Stored with each lead as TCPA evidence.' },
-        { name: 'submitLabel', type: 'string', initialValue: 'Request My Quote' },
-        { name: 'submittingLabel', type: 'string', initialValue: 'Sending…' },
-        { name: 'successTitle', type: 'string', initialValue: "Thanks, we've got your request." },
-        { name: 'successBody', type: 'string', initialValue: "We'll reach out shortly, or call" },
-        { name: 'errorName', type: 'string', initialValue: 'Name required' },
-        { name: 'errorPhone', type: 'string', initialValue: 'Valid phone required' },
-        { name: 'errorEmail', type: 'string', initialValue: 'Valid email required' },
-        { name: 'errorService', type: 'string', initialValue: 'Please select a service' },
-        { name: 'errorConsent', type: 'string', initialValue: 'Please agree to continue' },
-        { name: 'errorSubmit', type: 'string', initialValue: 'Something went wrong. Please call' },
-        { name: 'beforeLabel', type: 'string', initialValue: 'Before' },
-        { name: 'afterLabel', type: 'string', initialValue: 'After' },
-        { name: 'dragLabel', type: 'string', initialValue: 'Drag' },
-        { name: 'dragCaptionPrefix', type: 'string', initialValue: 'Drag to compare.' },
-        { name: 'learnMoreLabel', type: 'string', initialValue: 'Learn More' },
-        { name: 'aboutCallLabel', type: 'string', initialValue: 'Call Now' },
-        { name: 'backToTopLabel', type: 'string', initialValue: 'Back to top' },
-        { name: 'srName', type: 'string', initialValue: 'Full Name' },
-        { name: 'srPhone', type: 'string', initialValue: 'Phone' },
-        { name: 'srEmail', type: 'string', initialValue: 'Email' },
-        { name: 'srService', type: 'string', initialValue: 'Service Needed' },
-        { name: 'videoUnmuteLabel', type: 'string', initialValue: 'Tap to unmute' },
-        { name: 'videoMuteLabel', type: 'string', initialValue: 'Tap to mute' },
+        ...Object.entries(UI_DEFAULTS).map(([name, initialValue]) => ({ name, type: 'string' as const, initialValue })),
       ],
     }),
 
@@ -211,6 +179,8 @@ export default defineType({
       ],
     }),
 
+    defineField({ name: 'siteUrl', type: 'url', group: 'seo',
+      description: 'Live domain, e.g. https://example.com. Used for canonical links; NEXT_PUBLIC_SITE_URL overrides it per deployment.' }),
     defineField({ name: 'defaultSeo', type: 'seo', group: 'seo' }),
   ],
   preview: { select: { title: 'businessName' }, prepare: ({ title }) => ({ title: title ?? 'Site Settings' }) },

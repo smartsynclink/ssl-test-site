@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Phone } from './icons';
 import type { Settings } from '@/lib/types';
+import { uiText } from '@/lib/ui';
 
 const inView = (el: Element | null) => {
   if (!el) return false;
@@ -32,10 +33,10 @@ export default function StickyCta({ settings }: { settings: Settings }) {
   return (
     <div className={`sticky-cta${show ? ' visible' : ''}`}>
       <a href={settings.phoneHref} className="btn btn-outline-light">
-        <Phone />{settings.ui?.stickyCallLabel ?? 'Call Now'}
+        <Phone />{uiText(settings.ui, 'stickyCallLabel')}
       </a>
       <Link href={settings.headerCtaHref ?? '/contact#quote'} className="btn btn-primary">
-        {settings.ui?.stickyQuoteLabel ?? 'Request a Quote'}
+        {uiText(settings.ui, 'stickyQuoteLabel')}
       </Link>
     </div>
   );

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { PortableText } from '@portabletext/react';
 import { urlFor } from '@/sanity/image';
 import type { Page, Section, Settings } from '@/lib/types';
+import { uiText, type UiKey } from '@/lib/ui';
 import { ArrowRight, Camera, Check, Clock, Facebook, GoogleG, Heart, Instagram, Mail, Phone, Pin, Play, Shield, Star, Yelp } from './icons';
 import Needed from './Needed';
 import Reveal from './Reveal';
@@ -17,6 +18,9 @@ import FilterBar from './FilterBar';
 type Ctx = { settings: Settings; page: Page };
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const f = (s: Section, k: string) => (s as any)[k];
+/** Interface copy from Site Settings (falls back to lib/ui.ts defaults). */
+const t = (settings: Settings, key: UiKey, vars?: Record<string, string | number | undefined>) =>
+  uiText(settings.ui, key, vars);
 
 export function Sections({ page, settings }: Ctx) {
   return <>{(page.sections ?? []).map(s => (
@@ -28,11 +32,13 @@ export function Sections({ page, settings }: Ctx) {
 const areaFor = (page: Page, settings: Settings) =>
   (settings.serviceAreas ?? []).find(a => a.slug && a.slug === page.slug?.current);
 
-/** The service_area value sent with every lead from this page. */
-export const areaLabelFor = (page: Page) => (page.isHome ? 'Austin (Home)' : page.title);
+/** The service_area value sent with every lead from this page: the city on a city
+ *  page, the business's service area everywhere else. */
+export const areaLabelFor = (page: Page, settings: Settings) =>
+  areaFor(page, settings)?.name ?? settings.serviceAreaLabel ?? page.title;
 
 function SectionSwitch({ section: s, page, settings }: Ctx & { section: Section }) {
-  const areaLabel = areaLabelFor(page);
+  const areaLabel = areaLabelFor(page, settings);
   const city = areaFor(page, settings)?.name;
   switch (s._type) {
     case 'heroSection': return f(s, 'layout') === 'split'
@@ -55,7 +61,7 @@ function SectionSwitch({ section: s, page, settings }: Ctx & { section: Section 
     case 'relatedServices': return <RelatedServices s={s} settings={settings} page={page} />;
     case 'coverageSection': return <Coverage s={s} settings={settings} page={page} />;
     case 'internalLinks': return <InternalLinks s={s} settings={settings} page={page} />;
-    case 'filterBar': return <FilterBar filters={f(s, 'filters') ?? []} />;
+    case 'filterBar': return <FilterBar filters={f(s, 'filters') ?? []} label={t(settings, 'filterLabel')} />;
     case 'photoSection': return <Photos s={s} />;
     case 'mapSection': return <MapBlock s={s} settings={settings} />;
     case 'bookingSection': return <Booking s={s} settings={settings} />;
@@ -95,6 +101,13 @@ const NEEDED = '[CONTENT NEEDED]';
 const txt = (v?: string) =>
   typeof v === 'string' && v.startsWith(NEEDED) ? <Needed what={v.slice(NEEDED.length).trim()} /> : v;
 
+const compareLabels = (settings: Settings, title: string) => ({
+  before: t(settings, 'beforeLabel'), after: t(settings, 'afterLabel'), drag: t(settings, 'dragLabel'),
+  compare: t(settings, 'compareLabel', { title }),
+});
+const mapTitle = (settings: Settings) =>
+  t(settings, 'mapTitle', { business: settings.businessName, area: settings.serviceAreaLabel });
+
 const hasHead = (s: Section) => !!(f(s, 'eyebrow') || f(s, 'heading') || f(s, 'subheading'));
 
 /** Section heading block. `action` sits opposite the copy on wide screens. */
@@ -131,13 +144,13 @@ function HeroSplit({ s, settings, areaLabel }: { s: Section; settings: Settings;
       <HeroBg images={f(s, 'images') ?? []} />
       <div className="container hero-grid">
         <div className="hero-copy">
-          {settings.serviceAreaLabel && <span className="eyebrow">Serving {settings.serviceAreaLabel}</span>}
+          {settings.serviceAreaLabel && <span className="eyebrow">{t(settings, 'servingLabel', { area: settings.serviceAreaLabel })}</span>}
           <h1 className="hero-title">{lines.map((l, i) => (
             <span key={i} className={i === lines.length - 1 && lines.length > 1 ? 'accent' : undefined}>{l}</span>
           ))}</h1>
           {f(s, 'intro') && <p className="lede">{f(s, 'intro')}</p>}
           <div className="btn-row">
-            <Btn href="#hero-quote">{settings.headerCtaLabel ?? 'Request a Quote'}</Btn>
+            <Btn href="#hero-quote">{settings.headerCtaLabel || t(settings, 'stickyQuoteLabel')}</Btn>
             <CallBtn settings={settings} />
           </div>
           {settings.hours && (
@@ -189,7 +202,6 @@ function HeroShowcase({ s, settings, page }: { s: Section; settings: Settings; p
   const trust = settings.trustItems ?? [];
   const statItem = trust.find(t => splitStat(t.title));
   const stat = statItem && splitStat(statItem.title);
-  const ui = settings.ui ?? {};
   const quoteHref = sections.some(x => x._type === 'quoteSection')
     ? '#quote' : settings.headerCtaHref ?? '/contact#quote';
 
@@ -201,19 +213,19 @@ function HeroShowcase({ s, settings, page }: { s: Section; settings: Settings; p
               headline above it becomes display text; otherwise it is the H1. */}
           {f(s, 'h1')
             ? <h1 className="eyebrow hero-h1">{f(s, 'h1')}</h1>
-            : settings.serviceAreaLabel && <span className="eyebrow">Serving {settings.serviceAreaLabel}</span>}
+            : settings.serviceAreaLabel && <span className="eyebrow">{t(settings, 'servingLabel', { area: settings.serviceAreaLabel })}</span>}
           <HeadlineTag className="hero-title" h1={!f(s, 'h1')}>{lines.map((l, i) => (
             <span key={i} className={i === lines.length - 1 && lines.length > 1 ? 'accent' : undefined}>{l}</span>
           ))}</HeadlineTag>
           {f(s, 'intro') && <p className="lede">{f(s, 'intro')}</p>}
           <div className="btn-row">
-            <Btn href={quoteHref}>{f(s, 'formHeading') ?? settings.headerCtaLabel ?? 'Request a Quote'}</Btn>
+            <Btn href={quoteHref}>{f(s, 'formHeading') || settings.headerCtaLabel || t(settings, 'stickyQuoteLabel')}</Btn>
             <CallBtn settings={settings} />
           </div>
           <ul className="proof-row">
             {avg > 0 && (
-              <li className="proof-rating"><Stars n={Math.round(avg)} /><strong>{avg.toFixed(1)}</strong>
-                <span>{ui.ratingLabel ?? 'Average rating'}</span></li>
+              <li className="proof-rating"><Stars n={Math.round(avg)} label={t(settings, 'starsLabel', { count: Math.round(avg) })} /><strong>{avg.toFixed(1)}</strong>
+                <span>{t(settings, 'ratingLabel')}</span></li>
             )}
             {trust.filter(t => t !== statItem).slice(0, 2).map(({ title, icon }) => {
               const Icon = TRUST_ICONS[icon ?? ''] ?? Clock;
@@ -226,7 +238,7 @@ function HeroShowcase({ s, settings, page }: { s: Section; settings: Settings; p
           <div className="bento-tall">
             {project
               ? <BeforeAfter title={project.title} before={project.beforeImage} after={project.afterImage}
-                  labels={{ before: ui.beforeLabel, after: ui.afterLabel, drag: ui.dragLabel }} priority />
+                  labels={compareLabels(settings, project.title)} priority />
               : <div className="bento-photo"><HeroBg images={f(s, 'images') ?? []} sizes="(max-width: 1080px) 100vw, 30vw" /></div>}
           </div>
           {stat && statItem && (
@@ -261,8 +273,8 @@ const PageHero = ({ s, settings }: { s: Section; settings: Settings }) => {
           {f(s, 'intro') && <p className="lede">{f(s, 'intro')}</p>}
           {f(s, 'showCtas') !== false && (
             <div className="btn-row">
-              <Btn href="#quote">{settings.headerCtaLabel ?? 'Request a Quote'}</Btn>
-              <CallBtn settings={settings} variant="glass" label={settings.ui?.stickyCallLabel ?? 'Call Now'} />
+              <Btn href="#quote">{settings.headerCtaLabel || t(settings, 'stickyQuoteLabel')}</Btn>
+              <CallBtn settings={settings} variant="glass" label={t(settings, 'stickyCallLabel')} />
             </div>
           )}
         </div>
@@ -294,7 +306,7 @@ const Services = ({ s, settings }: { s: Section; settings: Settings }) => (
                 blurDataURL={c.image.asset?.metadata?.lqip} />}
               {!!c.services?.length && (
                 <span className="pill-tag left">
-                  {c.services.length} {c.services.length === 1 ? 'service' : 'services'}
+                  {t(settings, c.services.length === 1 ? 'serviceCountOne' : 'serviceCountMany', { count: c.services.length })}
                 </span>
               )}
               <span className="service-card-body">
@@ -324,7 +336,7 @@ const CtaBand = ({ s, settings }: { s: Section; settings: Settings }) => {
             <h2>{f(s, 'heading')}</h2>
             <div className="btn-row center">
               {f(s, 'showCall') !== false && (
-                <CallBtn settings={settings} variant="primary" label={settings.ui?.stickyCallLabel ?? 'Call Now'} />
+                <CallBtn settings={settings} variant="primary" label={t(settings, 'stickyCallLabel')} />
               )}
               {f(s, 'ctaLabel') && (
                 <Btn href={f(s, 'ctaHref') ?? '#quote'} variant="glass">{f(s, 'ctaLabel')}</Btn>
@@ -357,8 +369,7 @@ const Proof = ({ s, settings, city }: { s: Section; settings: Settings; city?: s
             <Reveal key={p._id}>
               <BeforeAfter title={p.title} caption={p.caption}
                 before={p.beforeImage} after={p.afterImage}
-                labels={{ before: settings.ui?.beforeLabel, after: settings.ui?.afterLabel,
-                          drag: settings.ui?.dragLabel }} />
+                labels={compareLabels(settings, p.title)} />
             </Reveal>
           ))}
           {videos.map((v: any) => (
@@ -413,7 +424,7 @@ const About = ({ s, settings }: { s: Section; settings: Settings }) => {
       <div className={`container about-layout${v ? '' : ' no-media'}`}>
         {v && (
           <Reveal><AboutVideo src={v.videoUrl}
-            unmuteLabel={settings.ui?.videoUnmuteLabel} muteLabel={settings.ui?.videoMuteLabel} /></Reveal>
+            unmuteLabel={t(settings, 'videoUnmuteLabel')} muteLabel={t(settings, 'videoMuteLabel')} /></Reveal>
         )}
         <Reveal>
           <div className="about-copy">
@@ -461,8 +472,8 @@ const Area = ({ s, settings }: { s: Section; settings: Settings }) => (
   </section>
 );
 
-const Stars = ({ n }: { n: number }) => (
-  <span className="stars" aria-label={`${n} out of 5 stars`}>
+const Stars = ({ n, label }: { n: number; label: string }) => (
+  <span className="stars" aria-label={label}>
     {Array.from({ length: n }).map((_, i) => <Star key={i} />)}
   </span>
 );
@@ -478,7 +489,7 @@ const Reviews = ({ s, settings, city }: { s: Section; settings: Settings; city?:
   const summary = reviews.length > 0 && (
     <div className="rating-card">
       <strong>{avg.toFixed(1)}</strong>
-      <span><Stars n={Math.round(avg)} /><small>{settings.ui?.ratingLabel ?? 'Average rating'}</small></span>
+      <span><Stars n={Math.round(avg)} label={t(settings, 'starsLabel', { count: Math.round(avg) })} /><small>{t(settings, 'ratingLabel')}</small></span>
     </div>
   );
   return (
@@ -490,7 +501,7 @@ const Reviews = ({ s, settings, city }: { s: Section; settings: Settings; city?:
           {reviews.map(r => (
             <Reveal key={r._id}>
               <article className="review-card">
-                <Stars n={r.rating ?? 5} />
+                <Stars n={r.rating ?? 5} label={t(settings, 'starsLabel', { count: r.rating ?? 5 })} />
                 <p>&ldquo;{r.quote}&rdquo;</p>
                 <div className="review-author">
                   <span className="avatar">{r.initials}</span>
@@ -504,7 +515,7 @@ const Reviews = ({ s, settings, city }: { s: Section; settings: Settings; city?:
         {f(s, 'showWidget') && (
           <div className="reviews-widget">
             {widget
-              ? <iframe src={widget} title="Google reviews" loading="lazy" />
+              ? <iframe src={widget} title={t(settings, 'reviewsWidgetTitle')} loading="lazy" />
               : <Needed block what="Google reviews widget (GHL Reputation embed URL in Site Settings)" />}
           </div>
         )}
@@ -517,14 +528,13 @@ const Reviews = ({ s, settings, city }: { s: Section; settings: Settings; city?:
 };
 
 const Quote = ({ s, settings, areaLabel }: { s: Section; settings: Settings; areaLabel: string }) => {
-  const ui = settings.ui ?? {};
   const band = f(s, 'showContactDetails') === false;
   const img = f(s, 'image');
   const items = [
-    { Icon: Phone, label: ui.contactPhoneLabel, value: settings.phone, href: settings.phoneHref, wide: true },
-    { Icon: Mail, label: ui.contactEmailLabel, value: settings.email, href: `mailto:${settings.email}`, wide: true },
-    { Icon: Pin, label: ui.contactAreaLabel, value: settings.serviceAreaLabel },
-    { Icon: Clock, label: ui.contactHoursLabel, value: settings.hours },
+    { Icon: Phone, label: t(settings, 'contactPhoneLabel'), value: settings.phone, href: settings.phoneHref, wide: true },
+    { Icon: Mail, label: t(settings, 'contactEmailLabel'), value: settings.email, href: `mailto:${settings.email}`, wide: true },
+    { Icon: Pin, label: t(settings, 'contactAreaLabel'), value: settings.serviceAreaLabel },
+    { Icon: Clock, label: t(settings, 'contactHoursLabel'), value: settings.hours },
   ].filter(i => i.value);
 
   return (
@@ -540,7 +550,7 @@ const Quote = ({ s, settings, areaLabel }: { s: Section; settings: Settings; are
               {f(s, 'subheading') && <p className="lede">{f(s, 'subheading')}</p>}
               {band ? (
                 <div className="btn-row">
-                  <CallBtn settings={settings} variant="primary" label={ui.stickyCallLabel ?? 'Call Now'} />
+                  <CallBtn settings={settings} variant="primary" label={t(settings, 'stickyCallLabel')} />
                 </div>
               ) : (
                 <div className="contact-grid">
@@ -644,7 +654,7 @@ const MapBlock = ({ s, settings }: { s: Section; settings: Settings }) => (
       {hasHead(s) && <Head s={s} center />}
       <Reveal>
         <div className="map-frame">
-          <MapEmbed query={f(s, 'mapQuery') ?? 'Austin,TX'} label={settings.businessName} />
+          <MapEmbed query={f(s, 'mapQuery') || settings.serviceAreaLabel || settings.businessName} title={mapTitle(settings)} />
         </div>
       </Reveal>
     </div>
@@ -685,7 +695,7 @@ const Booking = ({ s, settings }: { s: Section; settings: Settings }) => {
       <div className="container">
         <Head s={s} center />
         <div className="booking-frame">
-          <iframe src={url} title={f(s, 'buttonLabel') ?? 'Book an appointment'} loading="lazy" />
+          <iframe src={url} title={f(s, 'buttonLabel') || t(settings, 'bookingTitle')} loading="lazy" />
         </div>
       </div>
     </section>
@@ -710,10 +720,10 @@ const TrustBar = ({ settings }: { settings: Settings }) => {
             );
           })}
           <li><span className="icon-tile sm"><Shield /></span>
-            <span><strong>{settings.licenseNumber ? `License #${settings.licenseNumber}` : <Needed what="License number" />}</strong></span></li>
+            <span><strong>{settings.licenseNumber ? t(settings, 'licenseLabel', { number: settings.licenseNumber }) : <Needed what="License number" />}</strong></span></li>
           <li><span className="icon-tile sm"><Star /></span>
-            <span><strong>{rating ? `${rating.toFixed(1)} on Google` : <Needed what="Google rating" />}</strong>
-              {settings.googleReviewCount && <small>{settings.googleReviewCount} reviews</small>}</span></li>
+            <span><strong>{rating ? t(settings, 'googleRatingLabel', { rating: rating.toFixed(1) }) : <Needed what="Google rating" />}</strong>
+              {settings.googleReviewCount && <small>{t(settings, 'reviewCountLabel', { count: settings.googleReviewCount })}</small>}</span></li>
         </ul>
         {!!settings.brandLogos?.length && (
           <div className="brand-logos">
@@ -773,10 +783,10 @@ const Coverage = ({ s, settings, page }: { s: Section; settings: Settings; page:
             {f(s, 'subheading') && <p className="lede">{f(s, 'subheading')}</p>}
             <div className="coverage-facts">
               <div className="coverage-fact"><span className="icon-tile"><Clock /></span>
-                <span><small>Response time</small>
+                <span><small>{t(settings, 'responseTimeLabel')}</small>
                   <strong>{f(s, 'responseTime') || <Needed what="Response time" />}</strong></span></div>
               <div className="coverage-fact"><span className="icon-tile"><Pin /></span>
-                <span><small>Nearby areas also covered</small>
+                <span><small>{t(settings, 'nearbyAreasLabel')}</small>
                   {nearby.length
                     ? <span className="chip-row">{nearby.map(a => (
                         <Link href={`/${a.slug}`} className="chip" key={a.name}>{a.name}</Link>))}</span>
@@ -786,7 +796,7 @@ const Coverage = ({ s, settings, page }: { s: Section; settings: Settings; page:
         </Reveal>
         <Reveal>
           <div className="map-frame">
-            <MapEmbed query={f(s, 'mapQuery') ?? settings.serviceAreaLabel ?? ''} label={settings.businessName} />
+            <MapEmbed query={f(s, 'mapQuery') || settings.serviceAreaLabel || settings.businessName} title={mapTitle(settings)} />
           </div>
         </Reveal>
       </div>
@@ -797,8 +807,8 @@ const Coverage = ({ s, settings, page }: { s: Section; settings: Settings; page:
 /** City page footer links: every service page + nearby city pages. */
 const InternalLinks = ({ s, settings, page }: { s: Section; settings: Settings; page: Page }) => {
   const nearby = nearbyAreas(page, settings);
-  const areasLabel = settings.navLinks?.find(l => l.menu === 'areas')?.label ?? 'Service Areas';
-  const servicesLabel = settings.navLinks?.find(l => l.menu === 'services')?.label ?? 'Services';
+  const areasLabel = settings.navLinks?.find(l => l.menu === 'areas')?.label || t(settings, 'serviceAreasLabel');
+  const servicesLabel = settings.navLinks?.find(l => l.menu === 'services')?.label || t(settings, 'servicesLabel');
   return (
     <section className="sheet tint internal-links">
       <div className="container">
@@ -847,7 +857,7 @@ const Badges = ({ s, settings }: { s: Section; settings: Settings }) => {
           {badges.map(b => {
             const mark = BADGE_ICONS[b.icon ?? ''];
             const sub = b.icon === 'google' && !b.sub
-              ? (rating ? `${rating.toFixed(1)} rating` : <Needed what="Google rating" />)
+              ? (rating ? t(settings, 'badgeRatingLabel', { rating: rating.toFixed(1) }) : <Needed what="Google rating" />)
               : b.sub;
             const body = (
               <>

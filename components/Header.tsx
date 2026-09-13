@@ -5,6 +5,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { urlFor } from '@/sanity/image';
 import { ArrowRight, Chevron, Clock, Close, Phone, Pin } from './icons';
 import type { Settings } from '@/lib/types';
+import { uiText } from '@/lib/ui';
 
 type NavLink = NonNullable<Settings['navLinks']>[number];
 
@@ -32,8 +33,9 @@ export default function Header({ settings }: { settings: Settings }) {
   const areas = settings.serviceAreas ?? [];
   const links = settings.navLinks ?? [];
   const ctaHref = settings.headerCtaHref ?? '/contact#quote';
-  const ctaLabel = settings.headerCtaLabel ?? 'Request a Quote';
-  const callLabel = settings.ui?.stickyCallLabel ?? 'Call Now';
+  const t = (key: Parameters<typeof uiText>[1], vars?: Parameters<typeof uiText>[2]) => uiText(settings.ui, key, vars);
+  const ctaLabel = settings.headerCtaLabel || t('stickyQuoteLabel');
+  const callLabel = t('stickyCallLabel');
   const close = () => setDrawer(false);
   const areaHref = (slug?: string) => (slug ? `/${slug}` : '/contact');
 
@@ -86,21 +88,21 @@ export default function Header({ settings }: { settings: Settings }) {
             <a href={settings.phoneHref} className="top-bar-phone"><Phone />{settings.phone}</a>
             {settings.hours && <span className="top-bar-item"><Clock />{settings.hours}</span>}
             {settings.serviceAreaLabel && (
-              <span className="top-bar-item"><Pin />Serving {settings.serviceAreaLabel}</span>
+              <span className="top-bar-item"><Pin />{t('servingLabel', { area: settings.serviceAreaLabel })}</span>
             )}
             <Link href={ctaHref} className="top-bar-cta">{ctaLabel}<ArrowRight /></Link>
           </div>
         </div>
 
         <div className="nav-island">
-          <Link href="/" className="logo-wrap" aria-label={`${settings.businessName}, home`}>
+          <Link href="/" className="logo-wrap" aria-label={t('homeLinkLabel', { business: settings.businessName })}>
             {settings.logo && (
               <Image src={urlFor(settings.logo).width(240).url()} alt={settings.businessName}
                 width={72} height={48} sizes="72px" priority />
             )}
           </Link>
 
-          <nav className="primary-nav" aria-label="Primary">
+          <nav className="primary-nav" aria-label={t('primaryNavLabel')}>
             {links.map(l => l.menu ? (
               <div className={`nav-item${l.menu === 'services' ? ' has-mega' : ''}`} key={l.label}>
                 <button className="nav-link" aria-haspopup="true">{l.label} <Chevron /></button>
@@ -118,7 +120,7 @@ export default function Header({ settings }: { settings: Settings }) {
             <Link href={ctaHref} className="btn btn-primary sm nav-cta">
               {ctaLabel}<span className="btn-ico"><ArrowRight /></span>
             </Link>
-            <button className="menu-btn" aria-label="Open menu" aria-expanded={drawer}
+            <button className="menu-btn" aria-label={t('openMenuLabel')} aria-expanded={drawer}
               onClick={() => setDrawer(true)}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h10" /></svg>
@@ -134,7 +136,7 @@ export default function Header({ settings }: { settings: Settings }) {
             <Image src={urlFor(settings.logo).width(240).url()} alt={settings.businessName}
               width={60} height={40} sizes="60px" />
           )}
-          <button className="drawer-close" aria-label="Close menu" onClick={close}><Close /></button>
+          <button className="drawer-close" aria-label={t('closeMenuLabel')} onClick={close}><Close /></button>
         </div>
 
         <div className="drawer-scroll">

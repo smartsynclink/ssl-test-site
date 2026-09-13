@@ -23,17 +23,7 @@ export default defineType({
       description: 'Must match the existing live URL exactly — changing it breaks SEO and inbound links.',
       validation: r => r.required(),
     }),
-    defineField({
-      name: 'theme', type: 'string', group: 'content', initialValue: 'landing',
-      options: {
-        list: [
-          { title: 'Landing (home & city pages)', value: 'landing' },
-          { title: 'Inner (services, projects, FAQs, contact)', value: 'inner' },
-        ], layout: 'radio',
-      },
-      description: 'Selects the .pt-landing / .pt-inner stylesheet variant.',
-      validation: r => r.required(),
-    }),
+    defineField({ name: 'theme', type: 'string', group: 'content', hidden: true }),   // legacy stylesheet variant, unused
     defineField({
       name: 'isHome', type: 'boolean', group: 'content', initialValue: false,
       description: 'Renders at / instead of /<slug>.',
@@ -45,9 +35,9 @@ export default defineType({
     defineField({ name: 'seo', type: 'seo', group: 'seo' }),
   ],
   preview: {
-    select: { title: 'title', slug: 'slug.current', theme: 'theme', isHome: 'isHome' },
-    prepare: ({ title, slug, theme, isHome }) => ({
-      title, subtitle: `${isHome ? '/' : `/${slug ?? ''}`}  ·  ${theme}`,
+    select: { title: 'title', slug: 'slug.current', isHome: 'isHome' },
+    prepare: ({ title, slug, isHome }) => ({
+      title, subtitle: isHome ? '/' : `/${slug ?? ''}`,
     }),
   },
 });

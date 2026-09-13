@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import { draftMode } from 'next/headers';
 import { VisualEditing } from 'next-sanity/visual-editing';
@@ -12,10 +11,6 @@ const jakarta = Plus_Jakarta_Sans({
   weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
 });
-
-export const metadata: Metadata = {
-  title: 'Lumen Home Services',
-};
 
 export default async function RootLayout({ children }: LayoutProps<'/'>) {
   // Mounts the click-to-edit overlay that Studio's Presentation tool talks to.

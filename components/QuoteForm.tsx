@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import type { Settings } from '@/lib/types';
+import { uiText, type UiKey } from '@/lib/ui';
 
 /**
  * Renders the GHL form embed when one is configured, and the site's own styled
@@ -15,7 +16,7 @@ export default function QuoteForm({ settings, formId, serviceArea, consentText }
     const height = settings.integrations?.ghlFormHeight ?? 620;
     return (
       <div style={{ minHeight: height }}>
-        <iframe src={embed} title={settings.ui?.submitLabel ?? 'Request a quote'} loading="lazy"
+        <iframe src={embed} title={uiText(settings.ui, 'submitLabel')} loading="lazy"
           style={{ width: '100%', height, border: 'none', display: 'block' }} />
       </div>
     );
@@ -32,7 +33,7 @@ function BuiltInForm({ settings, formId, serviceArea, consentText }: {
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const services = (settings.serviceCategories ?? []).flatMap(c => c.services ?? []);
-  const ui = settings.ui ?? {};
+  const ui = (key: UiKey) => uiText(settings.ui, key);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -73,8 +74,8 @@ function BuiltInForm({ settings, formId, serviceArea, consentText }: {
       <div className="q-success">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
           <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-        <p><strong>{ui.successTitle}</strong><br />
-          {ui.successBody} <a href={settings.phoneHref}>{settings.phone}</a>.</p>
+        <p><strong>{ui('successTitle')}</strong><br />
+          {ui('successBody')} <a href={settings.phoneHref}>{settings.phone}</a>.</p>
       </div>
     );
   }
@@ -87,38 +88,38 @@ function BuiltInForm({ settings, formId, serviceArea, consentText }: {
         aria-hidden="true" style={{ position: 'absolute', left: '-9999px' }} />
 
       <div className="q-field" data-field="name">
-        <label className="sr-only" htmlFor={`${formId}-name`}>{ui.srName}</label>
-        <input id={`${formId}-name`} name="name" type="text" placeholder={ui.namePlaceholder} autoComplete="name" />
-        <span className="q-error" hidden={!errors.name}>{ui.errorName}</span>
+        <label className="sr-only" htmlFor={`${formId}-name`}>{ui('srName')}</label>
+        <input id={`${formId}-name`} name="name" type="text" placeholder={ui('namePlaceholder')} autoComplete="name" />
+        <span className="q-error" hidden={!errors.name}>{ui('errorName')}</span>
       </div>
       <div className="q-field" data-field="phone">
-        <label className="sr-only" htmlFor={`${formId}-phone`}>{ui.srPhone}</label>
-        <input id={`${formId}-phone`} name="phone" type="tel" placeholder={ui.phonePlaceholder} autoComplete="tel" />
-        <span className="q-error" hidden={!errors.phone}>{ui.errorPhone}</span>
+        <label className="sr-only" htmlFor={`${formId}-phone`}>{ui('srPhone')}</label>
+        <input id={`${formId}-phone`} name="phone" type="tel" placeholder={ui('phonePlaceholder')} autoComplete="tel" />
+        <span className="q-error" hidden={!errors.phone}>{ui('errorPhone')}</span>
       </div>
       <div className="q-field" data-field="email">
-        <label className="sr-only" htmlFor={`${formId}-email`}>{ui.srEmail}</label>
-        <input id={`${formId}-email`} name="email" type="email" placeholder={ui.emailPlaceholder} autoComplete="email" />
-        <span className="q-error" hidden={!errors.email}>{ui.errorEmail}</span>
+        <label className="sr-only" htmlFor={`${formId}-email`}>{ui('srEmail')}</label>
+        <input id={`${formId}-email`} name="email" type="email" placeholder={ui('emailPlaceholder')} autoComplete="email" />
+        <span className="q-error" hidden={!errors.email}>{ui('errorEmail')}</span>
       </div>
       <div className="q-field" data-field="service">
-        <label className="sr-only" htmlFor={`${formId}-service`}>{ui.srService}</label>
+        <label className="sr-only" htmlFor={`${formId}-service`}>{ui('srService')}</label>
         <select id={`${formId}-service`} name="service" defaultValue="">
-          <option value="" disabled>{ui.servicePlaceholder}</option>
+          <option value="" disabled>{ui('servicePlaceholder')}</option>
           {services.map(s => <option key={s} value={s}>{s}</option>)}
-          <option value={ui.serviceOtherOption}>{ui.serviceOtherOption}</option>
+          <option value={ui('serviceOtherOption')}>{ui('serviceOtherOption')}</option>
         </select>
-        <span className="q-error" hidden={!errors.service}>{ui.errorService}</span>
+        <span className="q-error" hidden={!errors.service}>{ui('errorService')}</span>
       </div>
       <div className="q-consent" data-field="consent">
         <input id={`${formId}-consent`} name="consent" type="checkbox" />
         <label htmlFor={`${formId}-consent`}>{consentText}</label>
-        <span className="q-error" hidden={!errors.consent}>{ui.errorConsent}</span>
+        <span className="q-error" hidden={!errors.consent}>{ui('errorConsent')}</span>
       </div>
       <button type="submit" className="btn btn-primary full" disabled={busy}>
-        {busy ? ui.submittingLabel : ui.submitLabel}
+        {busy ? ui('submittingLabel') : ui('submitLabel')}
       </button>
-      {errors.submit && <span className="q-error">{ui.errorSubmit} {settings.phone}.</span>}
+      {errors.submit && <span className="q-error">{ui('errorSubmit')} {settings.phone}.</span>}
     </form>
   );
 }

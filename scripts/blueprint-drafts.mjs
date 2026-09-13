@@ -17,6 +17,7 @@
  * Usage: node --env-file=.env.local scripts/blueprint-drafts.mjs [--write]
  */
 import { createClient } from 'next-sanity';
+import { UI_DEFAULTS } from '../lib/ui.ts';
 
 const token = process.env.SANITY_API_WRITE_TOKEN;
 if (!token) { console.error('SANITY_API_WRITE_TOKEN is not set'); process.exit(1); }
@@ -371,7 +372,16 @@ const settingsDraft = {
     : c),
   serviceAreas: settings.serviceAreas.map(a => ({ ...a, nearby: NEARBY[a.slug] ?? [] })),
   address: { ...settings.address, ...ADDRESS },
-  ui: { ...settings.ui, consentText: one(home_, 'heroSection').consentText },
+  // every interface label lives in Sanity: current values kept, new keys filled from lib/ui.ts,
+  // and labels for removed features dropped so Studio shows no unknown fields
+  ui: {
+    ...UI_DEFAULTS,
+    ...Object.fromEntries(Object.entries(settings.ui ?? {})
+      .filter(([k]) => !['dragCaptionPrefix', 'learnMoreLabel', 'aboutCallLabel'].includes(k))),
+    consentText: one(home_, 'heroSection').consentText,
+  },
+  // canonical domain, previously hardcoded in lib/metadata.ts
+  siteUrl: settings.siteUrl ?? 'https://lumenhomeservices.com',
   // Only listings the business really has: its linked social profiles and Yelp page
   // (5.0 on yelp.com, Sept 2026), plus licensed & insured from its own FAQ. The
   // Google badge shows the Google rating field, which the client still has to supply.

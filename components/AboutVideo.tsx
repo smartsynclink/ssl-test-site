@@ -2,8 +2,8 @@
 import { useRef, useState } from 'react';
 
 /** Autoplays muted; the whole frame is a mute toggle. */
-export default function AboutVideo({ src, unmuteLabel = 'Tap to unmute', muteLabel = 'Tap to mute' }: {
-  src: string; unmuteLabel?: string; muteLabel?: string;
+export default function AboutVideo({ src, unmuteLabel, muteLabel }: {
+  src: string; unmuteLabel: string; muteLabel: string;
 }) {
   const [muted, setMuted] = useState(true);
   const video = useRef<HTMLVideoElement>(null);
@@ -18,7 +18,7 @@ export default function AboutVideo({ src, unmuteLabel = 'Tap to unmute', muteLab
 
   return (
     <div className="video-frame" role="button" tabIndex={0}
-      aria-label={muted ? 'Unmute video' : 'Mute video'}
+      aria-label={muted ? unmuteLabel : muteLabel}
       onClick={toggle}
       onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } }}>
       <video ref={video} src={src} autoPlay muted loop playsInline />

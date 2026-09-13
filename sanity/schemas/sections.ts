@@ -7,8 +7,7 @@ import { defineArrayMember, defineField, defineType } from 'sanity';
  */
 
 const head = [
-  defineField({ name: 'headVariant', type: 'string',
-    description: 'Modifier class on the section head in the original (wide, gallery).' }),
+  defineField({ name: 'headVariant', type: 'string', hidden: true }),   // legacy GHL layout hint, unused
   defineField({ name: 'eyebrow', type: 'string' }),
   defineField({ name: 'heading', type: 'string' }),
   defineField({ name: 'subheading', type: 'text', rows: 2 }),
@@ -37,7 +36,7 @@ export const heroSection = defineType({
       description: 'Trailing part of the heading, rendered in gold italic.' }),
     defineField({ name: 'consentText', type: 'text', rows: 3,
       description: 'Stored verbatim with every submission as TCPA consent evidence.' }),
-    defineField({ name: 'trustItems', type: 'array', of: [{ type: 'string' }] }),
+    defineField({ name: 'trustItems', type: 'array', of: [{ type: 'string' }], hidden: true }),   // legacy; the trust bar reads Site Settings
   ],
   preview: { select: { subtitle: 'intro' }, prepare: ({ subtitle }) => ({ title: 'Hero', subtitle }) },
 });
@@ -82,13 +81,10 @@ export const ctaBand = defineType({
   fields: [
     defineField({ name: 'heading', type: 'string', validation: r => r.required() }),
     defineField({ name: 'image', type: 'image', options: { hotspot: true } }),
-    defineField({ name: 'overlayOpacity', type: 'number', initialValue: 0.42,
-      description: 'Landing pages use 0.42; inner pages use 0.68.' }),
+    defineField({ name: 'overlayOpacity', type: 'number', hidden: true }),   // legacy; the design sets the overlay
     defineField({ name: 'showCall', type: 'boolean', initialValue: true }),
-    defineField({ name: 'directImage', type: 'boolean', initialValue: false,
-      description: 'Render the image as a bare <img class="bg-img"> (landing band 2).' }),
-    defineField({ name: 'parallax', type: 'boolean', initialValue: true,
-      description: 'Fixed-attachment background. The first band on landing pages uses it.' }),
+    defineField({ name: 'directImage', type: 'boolean', hidden: true }),   // legacy GHL markup switch, unused
+    defineField({ name: 'parallax', type: 'boolean', hidden: true }),   // legacy GHL markup switch, unused
     defineField({ name: 'ctaLabel', type: 'string' }),
     defineField({ name: 'ctaHref', type: 'string' }),
   ],
@@ -101,8 +97,7 @@ export const proofSection = defineType({
   fields: [...head,
     defineField({ name: 'category', type: 'string',
       description: 'Used by the project filter bar to show/hide this section.' }),
-    defineField({ name: 'sectionStyle', type: 'string',
-      description: 'Inline style copied from the original markup. Leave alone.' }),
+    defineField({ name: 'sectionStyle', type: 'string', hidden: true }),   // legacy inline style, unused
     defineField({ name: 'local', type: 'boolean', initialValue: false,
       description: 'City page: show jobs tagged with this city, and flag [CONTENT NEEDED] when there are none.' }),
     defineField({ name: 'projects', type: 'array', of: [{ type: 'reference', to: [{ type: 'project' }] }] }),
@@ -133,10 +128,8 @@ export const faqSection = defineType({
         defineField({ name: 'faqs', type: 'array',
           of: [{ type: 'reference', to: [{ type: 'faq' }] }] }),
       ], preview: { select: { title: 'title' } } })] }),
-    defineField({ name: 'sectionStyle', type: 'string',
-      description: 'Inline style copied from the original markup. Leave alone.' }),
-    defineField({ name: 'headingStyle', type: 'string',
-      description: 'Inline style copied from the original markup. Leave alone.' }),
+    defineField({ name: 'sectionStyle', type: 'string', hidden: true }),   // legacy inline style, unused
+    defineField({ name: 'headingStyle', type: 'string', hidden: true }),   // legacy inline style, unused
     defineField({ name: 'ctaLabel', type: 'string' }),
     defineField({ name: 'ctaHref', type: 'string' }),
   ],
@@ -163,7 +156,7 @@ export const aboutSection = defineType({
 export const areaSection = defineType({
   name: 'areaSection', title: 'Service area', type: 'object',
   fields: [...head,
-    defineField({ name: 'mapQuery', type: 'string', description: 'e.g. "Austin,TX". The map loads only on interaction.' }),
+    defineField({ name: 'mapQuery', type: 'string', hidden: true }),   // legacy; the map lives on the Contact page
     defineField({ name: 'ctaLabel', type: 'string' }),
     defineField({ name: 'ctaHref', type: 'string' }),
   ],
@@ -187,14 +180,8 @@ export const reviewsSection = defineType({
 export const quoteSection = defineType({
   name: 'quoteSection', title: 'Quote / contact', type: 'object',
   fields: [...head,
-    defineField({
-      name: 'theme', type: 'string', initialValue: 'dark',
-      options: { list: [{ title: 'Dark (home & city pages)', value: 'dark' },
-                        { title: 'Light (inner pages)', value: 'light' }], layout: 'radio' },
-      description: 'Matches the two variants in the original stylesheet.',
-    }),
-    defineField({ name: 'sectionStyle', type: 'string',
-      description: 'Inline style copied from the original markup. Leave alone.' }),
+    defineField({ name: 'theme', type: 'string', hidden: true }),   // legacy stylesheet variant, unused
+    defineField({ name: 'sectionStyle', type: 'string', hidden: true }),   // legacy inline style, unused
     defineField({ name: 'showContactDetails', type: 'boolean', initialValue: true,
       description: 'Off = final CTA band (headline, phone, short form), as the Blueprint asks for.' }),
     defineField({ name: 'image', type: 'image', options: { hotspot: true },
@@ -204,7 +191,7 @@ export const quoteSection = defineType({
       description: 'Trailing part of the heading, rendered in gold italic.' }),
     defineField({ name: 'consentText', type: 'text', rows: 3 }),
   ],
-  preview: { select: { subtitle: 'theme' }, prepare: ({ subtitle }) => ({ title: 'Quote form', subtitle }) },
+  preview: { select: { title: 'heading' }, prepare: ({ title }) => ({ title: `Quote form — ${title ?? ''}` }) },
 });
 
 export const bookingSection = defineType({
@@ -263,7 +250,7 @@ export const photoSection = defineType({
 export const mapSection = defineType({
   name: 'mapSection', title: 'Map', type: 'object',
   fields: [...head,
-    defineField({ name: 'mapQuery', type: 'string', initialValue: 'Austin,TX' }),
+    defineField({ name: 'mapQuery', type: 'string', description: 'What the map shows, e.g. "Austin, TX". Defaults to the service area label in Site Settings.' }),
   ],
   preview: { prepare: () => ({ title: 'Map' }) },
 });

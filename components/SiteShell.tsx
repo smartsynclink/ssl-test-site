@@ -17,7 +17,7 @@ export default function SiteShell({ page, settings }: { page: Page; settings: Se
       </main>
       <Footer settings={settings} />
       <StickyCta settings={settings} />
-      <QuoteModal settings={settings} serviceArea={areaLabelFor(page)}
+      <QuoteModal settings={settings} serviceArea={areaLabelFor(page, settings)}
         consentText={settings.ui?.consentText ?? formSection?.consentText}
         heading={formSection?.formHeading} emphasis={formSection?.formHeadingEmphasis} />
     </div>
