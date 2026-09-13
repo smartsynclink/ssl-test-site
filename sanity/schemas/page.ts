@@ -23,7 +23,6 @@ export default defineType({
       description: 'Must match the existing live URL exactly — changing it breaks SEO and inbound links.',
       validation: r => r.required(),
     }),
-    defineField({ name: 'theme', type: 'string', group: 'content', hidden: true }),   // legacy stylesheet variant, unused
     defineField({
       name: 'isHome', type: 'boolean', group: 'content', initialValue: false,
       description: 'Renders at / instead of /<slug>.',

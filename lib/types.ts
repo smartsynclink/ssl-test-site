@@ -44,7 +44,7 @@ export type Section = { _key: string; _type: string; [k: string]: unknown };
 
 export type Page = {
   _id: string; title: string; slug: { current: string };
-  theme: 'landing' | 'inner'; isHome?: boolean;
+  isHome?: boolean;
   sections?: Section[];
   seo?: Seo;
 };

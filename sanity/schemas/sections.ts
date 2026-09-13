@@ -7,7 +7,6 @@ import { defineArrayMember, defineField, defineType } from 'sanity';
  */
 
 const head = [
-  defineField({ name: 'headVariant', type: 'string', hidden: true }),   // legacy GHL layout hint, unused
   defineField({ name: 'eyebrow', type: 'string' }),
   defineField({ name: 'heading', type: 'string' }),
   defineField({ name: 'subheading', type: 'text', rows: 2 }),
@@ -36,7 +35,6 @@ export const heroSection = defineType({
       description: 'Trailing part of the heading, rendered in gold italic.' }),
     defineField({ name: 'consentText', type: 'text', rows: 3,
       description: 'Stored verbatim with every submission as TCPA consent evidence.' }),
-    defineField({ name: 'trustItems', type: 'array', of: [{ type: 'string' }], hidden: true }),   // legacy; the trust bar reads Site Settings
   ],
   preview: { select: { subtitle: 'intro' }, prepare: ({ subtitle }) => ({ title: 'Hero', subtitle }) },
 });
@@ -81,10 +79,7 @@ export const ctaBand = defineType({
   fields: [
     defineField({ name: 'heading', type: 'string', validation: r => r.required() }),
     defineField({ name: 'image', type: 'image', options: { hotspot: true } }),
-    defineField({ name: 'overlayOpacity', type: 'number', hidden: true }),   // legacy; the design sets the overlay
     defineField({ name: 'showCall', type: 'boolean', initialValue: true }),
-    defineField({ name: 'directImage', type: 'boolean', hidden: true }),   // legacy GHL markup switch, unused
-    defineField({ name: 'parallax', type: 'boolean', hidden: true }),   // legacy GHL markup switch, unused
     defineField({ name: 'ctaLabel', type: 'string' }),
     defineField({ name: 'ctaHref', type: 'string' }),
   ],
@@ -97,7 +92,6 @@ export const proofSection = defineType({
   fields: [...head,
     defineField({ name: 'category', type: 'string',
       description: 'Used by the project filter bar to show/hide this section.' }),
-    defineField({ name: 'sectionStyle', type: 'string', hidden: true }),   // legacy inline style, unused
     defineField({ name: 'local', type: 'boolean', initialValue: false,
       description: 'City page: show jobs tagged with this city, and flag [CONTENT NEEDED] when there are none.' }),
     defineField({ name: 'projects', type: 'array', of: [{ type: 'reference', to: [{ type: 'project' }] }] }),
@@ -128,8 +122,6 @@ export const faqSection = defineType({
         defineField({ name: 'faqs', type: 'array',
           of: [{ type: 'reference', to: [{ type: 'faq' }] }] }),
       ], preview: { select: { title: 'title' } } })] }),
-    defineField({ name: 'sectionStyle', type: 'string', hidden: true }),   // legacy inline style, unused
-    defineField({ name: 'headingStyle', type: 'string', hidden: true }),   // legacy inline style, unused
     defineField({ name: 'ctaLabel', type: 'string' }),
     defineField({ name: 'ctaHref', type: 'string' }),
   ],
@@ -156,7 +148,6 @@ export const aboutSection = defineType({
 export const areaSection = defineType({
   name: 'areaSection', title: 'Service area', type: 'object',
   fields: [...head,
-    defineField({ name: 'mapQuery', type: 'string', hidden: true }),   // legacy; the map lives on the Contact page
     defineField({ name: 'ctaLabel', type: 'string' }),
     defineField({ name: 'ctaHref', type: 'string' }),
   ],
@@ -180,8 +171,6 @@ export const reviewsSection = defineType({
 export const quoteSection = defineType({
   name: 'quoteSection', title: 'Quote / contact', type: 'object',
   fields: [...head,
-    defineField({ name: 'theme', type: 'string', hidden: true }),   // legacy stylesheet variant, unused
-    defineField({ name: 'sectionStyle', type: 'string', hidden: true }),   // legacy inline style, unused
     defineField({ name: 'showContactDetails', type: 'boolean', initialValue: true,
       description: 'Off = final CTA band (headline, phone, short form), as the Blueprint asks for.' }),
     defineField({ name: 'image', type: 'image', options: { hotspot: true },

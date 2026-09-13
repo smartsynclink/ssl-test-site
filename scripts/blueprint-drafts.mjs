@@ -18,6 +18,7 @@
  */
 import { createClient } from 'next-sanity';
 import { UI_DEFAULTS } from '../lib/ui.ts';
+import { checkPages } from './check-content.mjs';
 
 const token = process.env.SANITY_API_WRITE_TOKEN;
 if (!token) { console.error('SANITY_API_WRITE_TOKEN is not set'); process.exit(1); }
@@ -149,6 +150,15 @@ const areaSlugs = new Set((settings.serviceAreas ?? []).map(a => a.slug));
 const serviceSlugs = (settings.serviceCategories ?? []).map(c => c.href?.replace(/^\//, '')).filter(Boolean);
 const areaName = slug => settings.serviceAreas.find(a => a.slug === slug)?.name;
 
+/** Fields from the old GHL port that no component reads any more; removed from the schema. */
+const LEGACY_SECTION_FIELDS = ['headVariant', 'sectionStyle', 'headingStyle', 'trustItems', 'overlayOpacity', 'directImage', 'parallax'];
+const LEGACY_BY_TYPE = { areaSection: ['mapQuery'], quoteSection: ['theme'] };
+const withoutLegacy = page => {
+  const { theme, ...rest } = page;   // eslint-disable-line @typescript-eslint/no-unused-vars
+  return { ...rest, sections: (page.sections ?? []).map(sec => Object.fromEntries(Object.entries(sec)
+    .filter(([k]) => !LEGACY_SECTION_FIELDS.includes(k) && !(LEGACY_BY_TYPE[sec._type] ?? []).includes(k)))) };
+};
+
 const of = (page, type) => page.sections.filter(s => s._type === type);
 const one = (page, type) => of(page, type)[0];
 const h1FromSeo = page => page.seo?.title?.split(' | ').find(t => !t.includes('Lumen Home Services'));
@@ -273,7 +283,7 @@ const contactHeroImage = one(bySlug.contact, 'innerHero').image;
 const phone = settings.phone, email = settings.email, biz = settings.businessName;
 
 const aboutPage = {
-  _id: 'drafts.page-about', _type: 'page', title: `About ${biz}`, slug: { _type: 'slug', current: 'about' }, theme: 'inner',
+  _id: 'drafts.page-about', _type: 'page', title: `About ${biz}`, slug: { _type: 'slug', current: 'about' },
   seo: { _type: 'seo', title: `About Us | ${biz}`, description: settings.footerNote },
   sections: [
     { _key: key(), _type: 'innerHero', eyebrow: 'About Us', heading: 'Bringing Light to Every Home',
@@ -296,7 +306,7 @@ const reviewNote = block('Last updated: September 2026');
 const mailing = `${ADDRESS.street}, ${ADDRESS.city}, ${ADDRESS.region} ${ADDRESS.postalCode}`;
 
 const privacyPage = {
-  _id: 'drafts.page-privacy-policy', _type: 'page', title: 'Privacy Policy', slug: { _type: 'slug', current: 'privacy-policy' }, theme: 'inner',
+  _id: 'drafts.page-privacy-policy', _type: 'page', title: 'Privacy Policy', slug: { _type: 'slug', current: 'privacy-policy' },
   seo: { _type: 'seo', title: `Privacy Policy | ${biz}`, description: `How ${biz} collects, uses, and protects the information you share with us.` },
   sections: [
     legalHero('Privacy Policy', `How ${biz} collects, uses, and protects the information you share with us.`),
@@ -324,7 +334,7 @@ const privacyPage = {
 };
 
 const termsPage = {
-  _id: 'drafts.page-terms', _type: 'page', title: 'Terms of Service', slug: { _type: 'slug', current: 'terms' }, theme: 'inner',
+  _id: 'drafts.page-terms', _type: 'page', title: 'Terms of Service', slug: { _type: 'slug', current: 'terms' },
   seo: { _type: 'seo', title: `Terms of Service | ${biz}`, description: `The terms that apply when you use the ${biz} website.` },
   sections: [
     legalHero('Terms of Service', `The terms that apply when you use the ${biz} website.`),
@@ -415,13 +425,13 @@ for (const p of pages) {
   if (p.isHome) sections = home(p);
   else if (serviceSlugs.includes(slug)) sections = service(p);
   else if (areaSlugs.has(slug)) sections = city(p);
-  else continue;   // contact, faqs, projects: not governed by the Blueprint
+  else sections = p.sections;   // contact, faqs, projects: not governed by the Blueprint, only cleaned
   if (sections.some(s => !s)) throw new Error(`${slug}: a section it expects is missing`);
   // nothing that exists may be dropped: every original section must survive
   const kept = new Set(sections.map(x => x._key));
   const lost = p.sections.filter(x => !kept.has(x._key) && !MERGED.has(x._key)).map(x => x._type);
   if (lost.length) throw new Error(`${slug}: would remove ${lost.join(', ')}`);
-  drafts.push({ ...p, _id: `drafts.${p._id}`, sections });
+  drafts.push(withoutLegacy({ ...p, _id: `drafts.${p._id}`, sections }));
 }
 
 // system fields come back from the fetch; the API assigns fresh ones on write
@@ -431,11 +441,15 @@ for (const d of drafts) {
   console.log(`${d._id}\n   ${list}`);
 }
 
-const leftover = JSON.stringify(drafts).match(/\[CONTENT NEEDED\][^"]*/g);
-if (leftover) throw new Error(`placeholder text still written into content: ${leftover.join(' | ')}`);
+// the same gate the site's content has to pass: only the template's section types and fields
+const draftPages = drafts.filter(d => d._type === 'page').map(withoutLegacy);
+const existingIds = new Set([...(await client.withConfig({ perspective: 'raw' }).fetch('*[]._id')).map(id => id.replace(/^drafts\./, '')),
+  ...drafts.map(d => d._id.replace(/^drafts\./, ''))]);
+const problems = checkPages(draftPages, existingIds);
+if (problems.length) throw new Error(`content check failed:\n  ${problems.join('\n  ')}`);
 
 if (!WRITE) { console.log(`\nDry run: ${drafts.length} drafts. Re-run with --write to save them.`); process.exit(0); }
 const tx = client.transaction();
-for (const d of drafts) tx.createOrReplace(strip(d));
+for (const d of drafts) tx.createOrReplace(strip(d._type === 'page' ? withoutLegacy(d) : d));
 const res = await tx.commit();
 console.log(`\nSaved ${drafts.length} drafts (transaction ${res.transactionId}). Published content is unchanged.`);

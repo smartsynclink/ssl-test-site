@@ -65,7 +65,11 @@ function SectionSwitch({ section: s, page, settings }: Ctx & { section: Section 
     case 'photoSection': return <Photos s={s} />;
     case 'mapSection': return <MapBlock s={s} settings={settings} />;
     case 'bookingSection': return <Booking s={s} settings={settings} />;
-    default: return null;
+    // Content can only use the template's section types. Anything else (e.g. written by a script
+    // rather than Studio) is flagged while developing and skipped in production so the page still renders.
+    default: return process.env.NODE_ENV === 'development'
+      ? <div className="needed block">Unknown section type &ldquo;{s._type}&rdquo; — not a template component</div>
+      : null;
   }
 }
 
