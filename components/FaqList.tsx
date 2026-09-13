@@ -1,53 +1,36 @@
 'use client';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { Plus } from './icons';
 
-/** Keeps the original accordion markup and class names rather than swapping to
- *  <details>, so the ported CSS applies unchanged. */
 type Faq = { _id: string; question: string; answer: string };
 
 export default function FaqList({ faqs, groups }: {
   faqs: Faq[]; groups?: { _key: string; title: string; faqs: Faq[] }[];
 }) {
   const [open, setOpen] = useState<string | null>(null);
-
-  // Grouped: the original puts each <h3> and its list as siblings directly
-  // under the reveal, with no wrapper around the set.
-  if (groups?.length) {
-    return (
-      <>
-        {groups.map((g, gi) => (
-          <Fragment key={g._key}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 19,
-              margin: gi === 0 ? '0 0 4px' : '40px 0 4px' }}>{g.title}</h3>
-            <div>
-              {g.faqs.map(f => <Item key={f._id} f={f} id={f._id} open={open} setOpen={setOpen} />)}
-            </div>
-          </Fragment>
-        ))}
-      </>
-    );
-  }
-
-  return (
-    <div id="faqList">
-      {faqs.map(f => <Item key={f._id} f={f} id={f._id} open={open} setOpen={setOpen} />)}
+  const list = (items: Faq[]) => (
+    <div className="faq-list">
+      {items.map(f => <Item key={f._id} f={f} open={open === f._id}
+        toggle={() => setOpen(open === f._id ? null : f._id)} />)}
     </div>
   );
+
+  if (groups?.length) {
+    return <>{groups.map(g => (
+      <div className="faq-group" key={g._key}><h3>{g.title}</h3>{list(g.faqs)}</div>
+    ))}</>;
+  }
+  return list(faqs);
 }
 
-function Item({ f, id, open, setOpen }: {
-  f: Faq; id: string; open: string | null; setOpen: (v: string | null) => void;
-}) {
-  const isOpen = open === id;
+function Item({ f, open, toggle }: { f: Faq; open: boolean; toggle: () => void }) {
   return (
-    <div className="faq-item">
-      <button className={`faq-q${isOpen ? ' open' : ''}`} aria-expanded={isOpen}
-        aria-controls={`faq-a-${id}`} onClick={() => setOpen(isOpen ? null : id)}>
-        {f.question}<Plus />
+    <div className={`faq-item${open ? ' open' : ''}`}>
+      <button className="faq-q" aria-expanded={open} aria-controls={`faq-a-${f._id}`} onClick={toggle}>
+        {f.question}<span className="faq-icon"><Plus /></span>
       </button>
-      <div className={`faq-a${isOpen ? ' open' : ''}`} id={`faq-a-${id}`} role="region">
-        <p>{f.answer}</p>
+      <div className="faq-a" id={`faq-a-${f._id}`} role="region">
+        <div><p>{f.answer}</p></div>
       </div>
     </div>
   );

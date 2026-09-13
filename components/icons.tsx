@@ -65,3 +65,28 @@ export const Instagram = () => (
 export const Yelp = () => (
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.2 2.2c-.5-.2-1 .1-1.2.6L7.8 8.5c-.2.6.1 1.2.7 1.4l4.9 1.6c.6.2 1.2-.2 1.2-.8V3c0-.4-.2-.7-.6-.8h-2.8zM6.9 10.8c-.2-.5-.8-.8-1.3-.5L1.3 12.5c-.5.3-.6.9-.3 1.4l1.6 2.5c.3.5.9.6 1.4.3l4.1-2.8c.5-.3.6-1 .2-1.4l-1.4-1.7zM9.4 14.1c-.4-.4-1-.4-1.4 0l-3.2 3.5c-.4.4-.3 1 .1 1.4l2.3 1.9c.4.4 1 .3 1.3-.1l2.6-3.9c.3-.4.2-1-.2-1.3l-1.5-1.5zM13.3 14.7c-.5.1-.8.6-.7 1.1l1 4.9c.1.5.6.9 1.1.8l2.9-.6c.5-.1.8-.6.7-1.1l-1.7-4.7c-.2-.5-.7-.7-1.2-.6l-1.1.2zM15.9 9.3c-.4.3-.5.9-.2 1.3l3 4c.3.4.9.5 1.3.2l2.3-1.8c.4-.3.5-.9.2-1.3l-3.4-3.7c-.3-.4-.9-.4-1.3-.1l-1.9 1.4z"/></svg>
 );
+/* Google's four-colour "G", for the Google listing badge. */
+export const GoogleG = () => (
+  <svg viewBox="0 0 48 48">
+    <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z" />
+    <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z" />
+    <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z" />
+    <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z" />
+  </svg>
+);
+export const ArrowRight = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" /></svg>
+);
+export const ArrowLeft = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5M11 6l-6 6 6 6" /></svg>
+);
+export const Shield = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6L12 3z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8.8 12.2l2.2 2.2 4.2-4.4" /></svg>
+);
+export const Play = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 001.5.87l11-6.5a1 1 0 000-1.74l-11-6.5A1 1 0 008 5.5z" /></svg>
+);

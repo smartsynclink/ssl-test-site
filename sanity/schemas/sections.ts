@@ -15,8 +15,18 @@ const head = [
 ];
 
 export const heroSection = defineType({
-  name: 'heroSection', title: 'Hero (with quote form)', type: 'object',
+  name: 'heroSection', title: 'Hero', type: 'object',
   fields: [
+    defineField({
+      name: 'layout', type: 'string', initialValue: 'showcase',
+      options: { list: [
+        { title: 'Showcase (live before/after + photo cards)', value: 'showcase' },
+        { title: 'Split (quote form beside the headline)', value: 'split' },
+      ], layout: 'radio' },
+      description: 'Showcase sends the main button to the quote form further down the page.',
+    }),
+    defineField({ name: 'h1', title: 'H1 (main service + city)', type: 'string',
+      description: 'Blueprint H1, shown above the headline. Leave empty when the headline already names the service and city.' }),
     defineField({ name: 'headingLines', type: 'array', of: [{ type: 'string' }],
       description: 'One entry per rendered line, e.g. "Breathe Easier." / "Live Safer."' }),
     defineField({ name: 'intro', type: 'text', rows: 3 }),
@@ -35,9 +45,12 @@ export const heroSection = defineType({
 export const innerHero = defineType({
   name: 'innerHero', title: 'Hero (inner page)', type: 'object',
   fields: [
+    defineField({ name: 'h1', title: 'H1 (service + city)', type: 'string',
+      description: 'Blueprint H1, shown above the headline. Leave empty on pages that are not a service.' }),
     defineField({ name: 'eyebrow', type: 'string' }),
     defineField({ name: 'heading', type: 'string', validation: r => r.required() }),
     defineField({ name: 'intro', type: 'text', rows: 3 }),
+    defineField({ name: 'showCtas', title: 'Show call + quote buttons', type: 'boolean', initialValue: true }),
     defineField({ name: 'centered', type: 'boolean', initialValue: true }),
     defineField({ name: 'image', type: 'image', options: { hotspot: true },
       fields: [{ name: 'alt', type: 'string', title: 'Alt text' }] }),
@@ -90,6 +103,8 @@ export const proofSection = defineType({
       description: 'Used by the project filter bar to show/hide this section.' }),
     defineField({ name: 'sectionStyle', type: 'string',
       description: 'Inline style copied from the original markup. Leave alone.' }),
+    defineField({ name: 'local', type: 'boolean', initialValue: false,
+      description: 'City page: show jobs tagged with this city, and flag [CONTENT NEEDED] when there are none.' }),
     defineField({ name: 'projects', type: 'array', of: [{ type: 'reference', to: [{ type: 'project' }] }] }),
     defineField({ name: 'videos', type: 'array', of: [{ type: 'reference', to: [{ type: 'videoItem' }] }] }),
     defineField({ name: 'ctaLabel', type: 'string' }),
@@ -103,6 +118,14 @@ export const faqSection = defineType({
   fields: [...head,
     defineField({ name: 'faqs', type: 'array', of: [{ type: 'reference', to: [{ type: 'faq' }] }],
       description: 'Flat list. Leave empty when using groups below.' }),
+    defineField({ name: 'items', title: 'Questions for this page only', type: 'array',
+      description: 'Local or service-specific questions that do not belong in the shared FAQ library.',
+      of: [defineArrayMember({ type: 'object', name: 'pageFaq', fields: [
+        defineField({ name: 'question', type: 'string', validation: r => r.required() }),
+        defineField({ name: 'answer', type: 'text', rows: 4, validation: r => r.required() }),
+      ], preview: { select: { title: 'question', subtitle: 'answer' } } })] }),
+    defineField({ name: 'needed', type: 'string',
+      description: 'Questions still missing, e.g. "Local questions: permits, HOA rules". Renders as [CONTENT NEEDED].' }),
     defineField({ name: 'groups', title: 'Grouped questions', type: 'array',
       description: 'Used by the FAQs page, which splits questions under headings.',
       of: [defineArrayMember({ type: 'object', name: 'faqGroup', fields: [
@@ -121,8 +144,9 @@ export const faqSection = defineType({
 });
 
 export const aboutSection = defineType({
-  name: 'aboutSection', title: 'What to expect (+ video)', type: 'object',
+  name: 'aboutSection', title: 'Why choose us (+ video)', type: 'object',
   fields: [
+    defineField({ name: 'eyebrow', type: 'string' }),
     defineField({ name: 'heading', type: 'string' }),
     defineField({ name: 'headingEmphasis', type: 'string',
       description: 'Trailing phrase rendered in gold italic.' }),
@@ -150,6 +174,10 @@ export const reviewsSection = defineType({
   name: 'reviewsSection', title: 'Reviews', type: 'object',
   fields: [...head,
     defineField({ name: 'reviews', type: 'array', of: [{ type: 'reference', to: [{ type: 'review' }] }] }),
+    defineField({ name: 'local', type: 'boolean', initialValue: false,
+      description: 'City page: show reviews from this city, and flag [CONTENT NEEDED] when there are none.' }),
+    defineField({ name: 'showWidget', title: 'Show Google reviews widget', type: 'boolean', initialValue: false,
+      description: 'Uses the GHL reviews widget URL from Site Settings.' }),
     defineField({ name: 'ctaLabel', type: 'string' }),
     defineField({ name: 'ctaHref', type: 'string' }),
   ],
@@ -167,7 +195,10 @@ export const quoteSection = defineType({
     }),
     defineField({ name: 'sectionStyle', type: 'string',
       description: 'Inline style copied from the original markup. Leave alone.' }),
-    defineField({ name: 'showContactDetails', type: 'boolean', initialValue: true }),
+    defineField({ name: 'showContactDetails', type: 'boolean', initialValue: true,
+      description: 'Off = final CTA band (headline, phone, short form), as the Blueprint asks for.' }),
+    defineField({ name: 'image', type: 'image', options: { hotspot: true },
+      description: 'Background for the CTA band layout.' }),
     defineField({ name: 'formHeading', type: 'string', initialValue: 'Get Your Free Quote' }),
     defineField({ name: 'formHeadingEmphasis', type: 'string', initialValue: 'Free Quote',
       description: 'Trailing part of the heading, rendered in gold italic.' }),
@@ -186,15 +217,22 @@ export const bookingSection = defineType({
 });
 
 export const breakdownSection = defineType({
-  name: 'breakdownSection', title: 'Service breakdown (card grid)', type: 'object',
+  name: 'breakdownSection', title: 'Cards / steps / checklist', type: 'object',
+  description: "What's included, how it works, signs you need this, pricing, offers.",
   fields: [...head,
+    defineField({ name: 'variant', type: 'string', initialValue: 'cards',
+      options: { list: [
+        { title: 'Cards', value: 'cards' },
+        { title: 'Numbered steps (a real sequence only)', value: 'steps' },
+        { title: 'Checklist', value: 'checks' },
+      ], layout: 'radio' } }),
     defineField({ name: 'cards', type: 'array', of: [{ type: 'object', fields: [
       { name: 'title', type: 'string' },
       { name: 'body', type: 'text', rows: 3 },
     ], preview: { select: { title: 'title', subtitle: 'body' } } }] }),
   ],
   preview: { select: { n: 'cards' },
-    prepare: ({ n }) => ({ title: 'Service breakdown', subtitle: `${n?.length ?? 0} cards` }) },
+    prepare: ({ n }) => ({ title: 'Cards / steps / checklist', subtitle: `${n?.length ?? 0} items` }) },
 });
 
 export const filterBar = defineType({
@@ -244,8 +282,47 @@ export const proseSection = defineType({
   preview: { select: { title: 'heading' }, prepare: ({ title }) => ({ title: `Copy — ${title ?? ''}` }) },
 });
 
+export const trustBar = defineType({
+  name: 'trustBar', title: 'Trust bar', type: 'object',
+  description: 'Built from Site Settings: trust items, licence number, Google rating, brand logos.',
+  fields: [defineField({ name: 'note', type: 'string', hidden: true })],
+  preview: { prepare: () => ({ title: 'Trust bar' }) },
+});
+
+export const badgesSection = defineType({
+  name: 'badgesSection', title: 'Badges & listings', type: 'object',
+  description: 'The badges from Site Settings (Google, Yelp, credentials).',
+  fields: [...head],
+  preview: { prepare: () => ({ title: 'Badges & listings' }) },
+});
+
+export const relatedServices = defineType({
+  name: 'relatedServices', title: 'Related services', type: 'object',
+  description: 'Links to the other service pages, from Site Settings.',
+  fields: [...head],
+  preview: { select: { title: 'heading' }, prepare: ({ title }) => ({ title: `Related services — ${title ?? ''}` }) },
+});
+
+export const coverageSection = defineType({
+  name: 'coverageSection', title: 'Coverage (city page)', type: 'object',
+  description: 'Map, response time and nearby areas for this city.',
+  fields: [...head,
+    defineField({ name: 'mapQuery', type: 'string', description: 'e.g. "Round Rock, TX"' }),
+    defineField({ name: 'responseTime', type: 'string', description: 'Only what the client states. Empty = [CONTENT NEEDED].' }),
+  ],
+  preview: { select: { title: 'heading' }, prepare: ({ title }) => ({ title: `Coverage — ${title ?? ''}` }) },
+});
+
+export const internalLinks = defineType({
+  name: 'internalLinks', title: 'Internal links (city page)', type: 'object',
+  description: 'Links back to every service page and to nearby city pages.',
+  fields: [...head],
+  preview: { prepare: () => ({ title: 'Internal links' }) },
+});
+
 export const sectionTypes = [
   heroSection, innerHero, statementSection, servicesSection, ctaBand, proofSection,
   faqSection, aboutSection, areaSection, reviewsSection, quoteSection, bookingSection,
   proseSection, breakdownSection, filterBar, photoSection, mapSection,
+  trustBar, badgesSection, relatedServices, coverageSection, internalLinks,
 ];

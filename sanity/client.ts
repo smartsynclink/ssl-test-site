@@ -27,6 +27,20 @@ const draftClient = client.withConfig({
 });
 
 /**
+ * Local review of unpublished work. With SANITY_DEV_DRAFTS=1, `next dev` reads
+ * drafts overlaid on published content, so a restructure saved as drafts can be
+ * reviewed on localhost while the deployed site keeps serving published
+ * content. No stega here: it appends invisible characters to every string and
+ * would break the string comparisons the components make.
+ */
+const devDrafts = process.env.NODE_ENV === 'development'
+  && process.env.SANITY_DEV_DRAFTS === '1' && !!readToken;
+const devDraftClient = client.withConfig({ useCdn: false, perspective: 'drafts', token: readToken });
+
+/** For build-time lists (generateStaticParams), which run outside a request. */
+export const listClient = devDrafts ? devDraftClient : client;
+
+/**
  * Cached Sanity fetch.
  *
  * Every query is tagged so the Sanity webhook can invalidate exactly what
@@ -58,6 +72,8 @@ export async function sanityFetch<T>({
     }
     return draftClient.fetch<T>(query, params, { next: { revalidate: 0 } });
   }
+
+  if (devDrafts) return devDraftClient.fetch<T>(query, params, { next: { revalidate: 0 } });
 
   return client.fetch<T>(query, params, {
     // In dev, always read through: otherwise edits made in Studio stay

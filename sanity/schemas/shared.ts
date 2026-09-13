@@ -16,6 +16,8 @@ export const review = defineType({
     defineField({ name: 'quote', type: 'text', rows: 5, validation: r => r.required() }),
     defineField({ name: 'initials', type: 'string', description: 'Falls back to initials of the author name.' }),
     defineField({ name: 'rating', type: 'number', initialValue: 5, validation: r => r.min(1).max(5) }),
+    defineField({ name: 'city', type: 'string',
+      description: 'Blueprint: every review shows first name + city. City pages show reviews from their own city.' }),
   ],
   preview: { select: { title: 'author', subtitle: 'quote' } },
 });
@@ -26,6 +28,7 @@ export const project = defineType({
     defineField({ name: 'title', type: 'string', validation: r => r.required() }),
     defineField({ name: 'caption', type: 'text', rows: 2 }),
     defineField({ name: 'category', type: 'string', description: 'Matches a service category id; drives the Projects page filter.' }),
+    defineField({ name: 'city', type: 'string', description: 'Where the job was done. City pages show their own jobs as local proof.' }),
     defineField({ name: 'beforeImage', type: 'image', options: { hotspot: true }, validation: r => r.required() }),
     defineField({ name: 'afterImage', type: 'image', options: { hotspot: true }, validation: r => r.required() }),
   ],

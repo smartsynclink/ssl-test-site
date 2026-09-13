@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "verify:css": "python3 scripts/verify-css.py"
+    "lint": "eslint"
   },
   "dependencies": {
     "@portabletext/react": "^8.0.1",

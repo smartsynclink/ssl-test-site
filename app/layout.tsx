@@ -1,21 +1,13 @@
 import type { Metadata } from 'next';
-import { Fraunces, Outfit } from 'next/font/google';
+import { Plus_Jakarta_Sans } from 'next/font/google';
 import { draftMode } from 'next/headers';
 import { VisualEditing } from 'next-sanity/visual-editing';
 import './globals.css';
 
-// Weights and styles match the original site's Google Fonts request, but
-// self-hosted so there is no render-blocking request to fonts.googleapis.com.
-const fraunces = Fraunces({
-  variable: '--font-fraunces',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
-  display: 'swap',
-});
-
-const outfit = Outfit({
-  variable: '--font-outfit',
+// One family carries the whole site: 800 for display, 400-600 for copy.
+// Self-hosted by next/font, so there is no render-blocking font request.
+const jakarta = Plus_Jakarta_Sans({
+  variable: '--font-jakarta',
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
@@ -33,7 +25,7 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
   const { isEnabled: isDraft } = await draftMode();
 
   return (
-    <html lang="en" className={`${fraunces.variable} ${outfit.variable}`}>
+    <html lang="en" className={jakarta.variable}>
       <body>
         {children}
         {isDraft && <VisualEditing />}

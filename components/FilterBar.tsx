@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 /** Projects-page filter. Sections tag themselves with data-category; the bar
- *  shows or hides them, matching the original behaviour. */
+ *  shows or hides them. */
 export default function FilterBar({ filters }: { filters: { label: string; value: string }[] }) {
   const [active, setActive] = useState(filters[0]?.value ?? 'all');
 
@@ -13,12 +13,12 @@ export default function FilterBar({ filters }: { filters: { label: string; value
   }, [active]);
 
   return (
-    <section className="filter-bar-section">
+    <section className="band-dark filter-section">
       <div className="container">
         <div className="filter-bar" role="tablist" aria-label="Filter projects">
           {filters.map(f => (
             <button type="button" key={f.value} role="tab" aria-selected={active === f.value}
-              className={`filter-btn${active === f.value ? ' active' : ''}`}
+              className={`chip${active === f.value ? ' active' : ''}`}
               onClick={() => setActive(f.value)}>
               {f.label}
             </button>

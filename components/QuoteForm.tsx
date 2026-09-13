@@ -115,7 +115,7 @@ function BuiltInForm({ settings, formId, serviceArea, consentText }: {
         <label htmlFor={`${formId}-consent`}>{consentText}</label>
         <span className="q-error" hidden={!errors.consent}>{ui.errorConsent}</span>
       </div>
-      <button type="submit" className="btn-gold full" disabled={busy}>
+      <button type="submit" className="btn btn-primary full" disabled={busy}>
         {busy ? ui.submittingLabel : ui.submitLabel}
       </button>
       {errors.submit && <span className="q-error">{ui.errorSubmit} {settings.phone}.</span>}

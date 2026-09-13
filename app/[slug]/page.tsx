@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { sanityFetch, client } from '@/sanity/client';
+import { sanityFetch, listClient } from '@/sanity/client';
 import { PAGE_QUERY, SETTINGS_QUERY, SLUGS_QUERY } from '@/lib/queries';
 import SiteShell from '@/components/SiteShell';
 import { buildMetadata } from '@/lib/metadata';
@@ -16,7 +16,7 @@ import type { Page, Settings } from '@/lib/types';
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const slugs = await client.fetch<string[]>(SLUGS_QUERY);
+  const slugs = await listClient.fetch<string[]>(SLUGS_QUERY);
   return slugs.filter(Boolean).map(slug => ({ slug }));
 }
 

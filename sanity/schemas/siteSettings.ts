@@ -44,6 +44,27 @@ export default defineType({
       ],
     }),
     defineField({ name: 'serviceAreaLabel', type: 'string', group: 'business', description: 'e.g. Greater Austin, TX' }),
+    defineField({ name: 'licenseNumber', type: 'string', group: 'business',
+      description: 'Shown in the trust bar and footer. Leave empty until the client provides it.' }),
+    defineField({ name: 'googleRating', type: 'number', group: 'business',
+      description: 'Google Business Profile star rating, e.g. 4.9. Never estimate.',
+      validation: r => r.min(1).max(5) }),
+    defineField({ name: 'googleReviewCount', type: 'number', group: 'business' }),
+    defineField({
+      name: 'badges', title: 'Badges & listings', type: 'array', group: 'business',
+      description: 'Platforms and credentials the client really has (Google, Yelp, Thumbtack, BBB, awards). Never add one they do not hold.',
+      of: [{ type: 'object', name: 'badge', fields: [
+        { name: 'title', type: 'string' },
+        { name: 'sub', type: 'string', description: 'e.g. "5.0 rating". Left empty on the Google badge, the Google rating above is used.' },
+        { name: 'icon', type: 'string', options: { list: ['google', 'yelp', 'facebook', 'instagram', 'shield', 'star', 'check'] },
+          description: 'Built-in mark. Upload a logo instead for any other platform or award.' },
+        { name: 'logo', type: 'image' },
+        { name: 'href', type: 'url', description: 'Link to the listing or certificate.' },
+      ], preview: { select: { title: 'title', subtitle: 'sub', media: 'logo' } } }],
+    }),
+    defineField({ name: 'brandLogos', type: 'array', group: 'business',
+      description: 'Brand / manufacturer logos for the trust bar. Only brands the client actually carries.',
+      of: [{ type: 'image', fields: [{ name: 'alt', type: 'string', title: 'Brand name' }] }] }),
     defineField({ name: 'hours', type: 'string', group: 'business', description: 'e.g. Sun – Fri, 9:00 AM – 6:00 PM' }),
     defineField({
       name: 'social', type: 'object', group: 'business',
@@ -56,13 +77,14 @@ export default defineType({
 
     defineField({
       name: 'navLinks', title: 'Header links', type: 'array', group: 'nav',
+      description: 'In order. Blueprint menu: Home · Services · Service Areas · About · Reviews · Contact.',
       of: [{ type: 'object', name: 'navLink', fields: [
         { name: 'label', type: 'string' },
         { name: 'href', type: 'string' },
+        { name: 'menu', type: 'string', description: 'Open a dropdown instead of a plain link.',
+          options: { list: [{ title: 'Services', value: 'services' }, { title: 'Service areas', value: 'areas' }] } },
       ], preview: { select: { title: 'label', subtitle: 'href' } } }],
     }),
-    defineField({ name: 'navServicesLabel', type: 'string', group: 'nav', initialValue: 'Services' }),
-    defineField({ name: 'navAreasLabel', type: 'string', group: 'nav', initialValue: 'Service Areas' }),
     defineField({ name: 'headerCtaLabel', type: 'string', group: 'nav', initialValue: 'Request a Quote' }),
     defineField({ name: 'headerCtaHref', type: 'string', group: 'nav', initialValue: '/contact#quote' }),
     defineField({
@@ -82,6 +104,13 @@ export default defineType({
       name: 'footerContactTitle', type: 'string', group: 'nav', initialValue: 'Contact',
     }),
     defineField({
+      name: 'legalLinks', title: 'Legal links (footer)', type: 'array', group: 'nav',
+      of: [{ type: 'object', name: 'legalLink', fields: [
+        { name: 'label', type: 'string' },
+        { name: 'href', type: 'string' },
+      ], preview: { select: { title: 'label', subtitle: 'href' } } }],
+    }),
+    defineField({
       name: 'footerNote', type: 'text', rows: 3, group: 'nav',
     }),
     defineField({
@@ -89,7 +118,7 @@ export default defineType({
       of: [{ type: 'object', name: 'trustItem', fields: [
         { name: 'title', type: 'string' },
         { name: 'sub', type: 'string' },
-        { name: 'icon', type: 'string', options: { list: ['clock', 'pin', 'camera', 'heart'] } },
+        { name: 'icon', type: 'string', options: { list: ['clock', 'pin', 'camera', 'heart', 'shield', 'star'] } },
       ], preview: { select: { title: 'title', subtitle: 'sub' } } }],
     }),
     defineField({
@@ -108,6 +137,8 @@ export default defineType({
         { name: 'emailPlaceholder', type: 'string', initialValue: 'Email' },
         { name: 'servicePlaceholder', type: 'string', initialValue: 'Service needed' },
         { name: 'serviceOtherOption', type: 'string', initialValue: 'Not sure / other' },
+        { name: 'consentText', type: 'text', rows: 3,
+          description: 'Consent line under every quote form (modal included). Stored with each lead as TCPA evidence.' },
         { name: 'submitLabel', type: 'string', initialValue: 'Request My Quote' },
         { name: 'submittingLabel', type: 'string', initialValue: 'Sending…' },
         { name: 'successTitle', type: 'string', initialValue: "Thanks, we've got your request." },
@@ -151,6 +182,8 @@ export default defineType({
       of: [{ type: 'object', fields: [
         { name: 'name', type: 'string' },
         { name: 'slug', type: 'string' },
+        { name: 'nearby', type: 'array', of: [{ type: 'string' }],
+          description: 'Slugs of 2–3 nearby served areas, linked from this city page.' },
       ], preview: { select: { title: 'name', subtitle: 'slug' } } }],
     }),
     defineField({
@@ -168,6 +201,8 @@ export default defineType({
           description: 'Reserve this height so the embed causes no layout shift.' },
         { name: 'chatWidgetId', type: 'string', title: 'GHL chat widget ID' },
         { name: 'chatWidgetResourcesUrl', type: 'url' },
+        { name: 'reviewsWidgetUrl', type: 'url', title: 'GHL reviews widget URL',
+          description: 'The iframe src from the GHL Reputation reviews widget embed code.' },
         { name: 'calendarEmbedUrl', type: 'url', title: 'GHL booking calendar URL',
           description: 'Leave empty to hide the booking section entirely.' },
         { name: 'gtmId', type: 'string', title: 'Google Tag Manager ID' },
