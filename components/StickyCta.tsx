@@ -32,8 +32,8 @@ export default function StickyCta({ settings }: { settings: Settings }) {
 
   return (
     <div className={`sticky-cta${show ? ' visible' : ''}`}>
-      <a href={settings.phoneHref} className="btn btn-outline-light">
-        <Phone />{uiText(settings.ui, 'stickyCallLabel')}
+      <a href={settings.phoneHref} className="btn btn-outline-light sticky-call">
+        <Phone /><span>{uiText(settings.ui, 'stickyCallLabel')}</span>
       </a>
       <Link href={settings.headerCtaHref ?? '/contact#quote'} className="btn btn-primary">
         {uiText(settings.ui, 'stickyQuoteLabel')}

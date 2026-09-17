@@ -557,6 +557,14 @@ main > .filter-section:first-child { margin-top: 0; padding-top: calc(var(--head
 .sticky-cta.visible { transform: none; }
 .sticky-cta .btn { min-height: 48px; }
 @media (max-width: 760px) { .sticky-cta { display: grid; } }
+/* GHL's chat bubble (58px, fixed 20px from the bottom right, inside its shadow DOM so it can't be moved from here):
+   end the bar beside it, vertically centred on it */
+@media (max-width: 760px) {
+  body:has(chat-widget) .sticky-cta { right: 88px; bottom: 17px; }
+  /* no room for both labels beside the bubble: Call keeps its icon (the number is in the top bar), label stays for screen readers */
+  body:has(chat-widget) .sticky-call { width: 48px; padding: 0; }
+  body:has(chat-widget) .sticky-call span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
 
 /* ============ HERO: SHOWCASE LAYOUT ============ */
 .hero-showcase { padding-bottom: clamp(56px, 7vw, 96px); }
