@@ -1,4 +1,5 @@
 'use client';
+import Script from 'next/script';
 import { useState } from 'react';
 import type { Settings } from '@/lib/types';
 import { uiText, type UiKey } from '@/lib/ui';
@@ -18,6 +19,7 @@ export default function QuoteForm({ settings, formId, serviceArea, consentText }
       <div style={{ minHeight: height }}>
         <iframe src={embed} title={uiText(settings.ui, 'submitLabel')} loading="lazy"
           style={{ width: '100%', height, border: 'none', display: 'block' }} />
+        <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="lazyOnload" />
       </div>
     );
   }

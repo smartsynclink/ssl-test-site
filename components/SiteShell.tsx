@@ -2,6 +2,7 @@ import Header from './Header';
 import Footer from './Footer';
 import StickyCta from './StickyCta';
 import QuoteModal from './QuoteModal';
+import Integrations from './Integrations';
 import { Sections, areaLabelFor } from './Sections';
 import type { Page, Settings } from '@/lib/types';
 
@@ -20,6 +21,7 @@ export default function SiteShell({ page, settings }: { page: Page; settings: Se
       <QuoteModal settings={settings} serviceArea={areaLabelFor(page, settings)}
         consentText={settings.ui?.consentText ?? formSection?.consentText}
         heading={formSection?.formHeading} emphasis={formSection?.formHeadingEmphasis} />
+      <Integrations integrations={settings.integrations} />
     </div>
   );
 }

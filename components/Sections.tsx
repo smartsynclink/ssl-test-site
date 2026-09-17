@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Script from 'next/script';
 import Link from 'next/link';
 import { PortableText } from '@portabletext/react';
 import { urlFor } from '@/sanity/image';
@@ -191,26 +192,20 @@ function HeroSplit({ s, settings, areaLabel }: { s: Section; settings: Settings;
 const HeadlineTag = ({ h1, className, children }: { h1: boolean; className: string; children: React.ReactNode }) =>
   h1 ? <h1 className={className}>{children}</h1> : <p className={className}>{children}</p>;
 
-/** Leading figure of a trust title, e.g. "5+ Years Experience" -> ["5+", "Years Experience"]. */
-const splitStat = (title: string) => title.match(/^(\S*\d\S*)\s+(.+)$/)?.slice(1) as [string, string] | undefined;
-
-/** Showcase hero: copy on the left, a bento of real work on the right. It borrows
- *  the first project and the reviews from sections further down the same page, so
- *  it needs no content of its own beyond the regular hero fields. */
+/** Showcase hero: copy over a faded job photo, with the first service categories as
+ *  labelled photo tiles (one tall, two stacked) that link to their pages. */
 function HeroShowcase({ s, settings, page }: { s: Section; settings: Settings; page: Page }) {
   const lines: string[] = f(s, 'headingLines') ?? [];
   const sections = page.sections ?? [];
-  const project = sections.flatMap(x => x._type === 'proofSection' ? f(x, 'projects') ?? [] : [])[0];
   const reviews: any[] = sections.flatMap(x => x._type === 'reviewsSection' ? f(x, 'reviews') ?? [] : []);
   const avg = reviews.length ? reviews.reduce((t, r) => t + (r.rating ?? 5), 0) / reviews.length : 0;
-  const trust = settings.trustItems ?? [];
-  const statItem = trust.find(t => splitStat(t.title));
-  const stat = statItem && splitStat(statItem.title);
+  const tiles = (settings.serviceCategories ?? []).filter(c => c.image).slice(0, 3);
   const quoteHref = sections.some(x => x._type === 'quoteSection')
     ? '#quote' : settings.headerCtaHref ?? '/contact#quote';
 
   return (
     <section className="sheet hero hero-showcase">
+      <HeroBg images={f(s, 'images') ?? []} />
       <div className="container showcase-grid">
         <div className="hero-copy">
           {/* Blueprint H1 = main service + city. When a separate H1 is set the
@@ -231,31 +226,25 @@ function HeroShowcase({ s, settings, page }: { s: Section; settings: Settings; p
               <li className="proof-rating"><Stars n={Math.round(avg)} label={t(settings, 'starsLabel', { count: Math.round(avg) })} /><strong>{avg.toFixed(1)}</strong>
                 <span>{t(settings, 'ratingLabel')}</span></li>
             )}
-            {trust.filter(t => t !== statItem).slice(0, 2).map(({ title, icon }) => {
+            {(settings.trustItems ?? []).slice(0, 2).map(({ title, icon }) => {
               const Icon = TRUST_ICONS[icon ?? ''] ?? Clock;
               return <li key={title}><Icon />{title}</li>;
             })}
           </ul>
         </div>
 
-        <div className="bento">
-          <div className="bento-tall">
-            {project
-              ? <BeforeAfter title={project.title} before={project.beforeImage} after={project.afterImage}
-                  labels={compareLabels(settings, project.title)} priority />
-              : <div className="bento-photo"><HeroBg images={f(s, 'images') ?? []} sizes="(max-width: 1080px) 100vw, 30vw" /></div>}
+        {tiles.length > 0 && (
+          <div className={`bento count-${tiles.length}`}>
+            {tiles.map((c, i) => (
+              <Link href={c.href ?? '#'} className={`bento-tile${i === 0 ? ' tall' : ''}`} key={c.id}>
+                <Image src={urlFor(c.image!).width(i === 0 ? 900 : 640).url()} alt={c.title} fill priority={i === 0}
+                  sizes={i === 0 ? '(max-width: 1080px) 55vw, 30vw' : '(max-width: 1080px) 45vw, 22vw'}
+                  placeholder={c.image!.asset?.metadata?.lqip ? 'blur' : 'empty'} blurDataURL={c.image!.asset?.metadata?.lqip} />
+                <span className="pill-tag left bottom">{c.title}</span>
+              </Link>
+            ))}
           </div>
-          {stat && statItem && (
-            <div className="bento-stat">
-              <span className="bento-stat-top">{statItem.sub}</span>
-              <span><strong>{stat[0]}</strong><small>{stat[1]}</small></span>
-            </div>
-          )}
-          <div className="bento-photo">
-            <HeroBg images={f(s, 'images') ?? []} sizes="(max-width: 1080px) 50vw, 25vw" />
-            {settings.serviceAreaLabel && <span className="pill-tag left bottom"><Pin />{settings.serviceAreaLabel}</span>}
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );
@@ -288,7 +277,7 @@ const PageHero = ({ s, settings }: { s: Section; settings: Settings }) => {
 };
 
 const Statement = ({ s }: { s: Section }) => (
-  <section className="band-dark statement">
+  <section className="sheet statement">
     <div className="container">
       <Reveal><p className="statement-text"><Emph text={f(s, 'text')} em={f(s, 'emphasis')} /></p></Reveal>
     </div>
@@ -699,8 +688,10 @@ const Booking = ({ s, settings }: { s: Section; settings: Settings }) => {
       <div className="container">
         <Head s={s} center />
         <div className="booking-frame">
-          <iframe src={url} title={f(s, 'buttonLabel') || t(settings, 'bookingTitle')} loading="lazy" />
+          <iframe src={url} title={f(s, 'buttonLabel') || t(settings, 'bookingTitle')} loading="lazy" scrolling="no" />
         </div>
+        {/* GHL's embed helper resizes the calendar to its content */}
+        <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="lazyOnload" />
       </div>
     </section>
   );
