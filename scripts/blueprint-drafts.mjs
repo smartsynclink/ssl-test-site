@@ -392,12 +392,11 @@ const settingsDraft = {
   },
   // canonical domain, previously hardcoded in lib/metadata.ts
   siteUrl: settings.siteUrl ?? 'https://lumenhomeservices.com',
-  // Only listings the business really has: its linked social profiles and Yelp page
-  // (5.0 on yelp.com, Sept 2026), plus licensed & insured from its own FAQ. The
+  // Only listings the business really has: its linked social profiles, plus licensed &
+  // insured from its own FAQ (no Yelp: the client confirmed they have none, Sept 2026). The
   // Google badge shows the Google rating field, which the client still has to supply.
   badges: [
     { _key: key(), title: 'Google', icon: 'google' },
-    { _key: key(), title: 'Yelp', sub: '5.0 rating', icon: 'yelp', href: settings.social?.yelp },
     { _key: key(), title: 'Licensed & Insured', sub: 'Documentation on request', icon: 'shield' },
     { _key: key(), title: 'Facebook', sub: 'Follow us', icon: 'facebook', href: settings.social?.facebook },
     { _key: key(), title: 'Instagram', sub: 'Follow us', icon: 'instagram', href: settings.social?.instagram },
