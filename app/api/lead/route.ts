@@ -19,9 +19,9 @@ import { leadNote, splitName, toE164, validateLead } from '@/lib/lead';
 const API_BASE = process.env.GHL_API_BASE || 'https://services.leadconnectorhq.com';
 const API_VERSION = process.env.GHL_API_VERSION || '2021-07-28';
 
-async function ghl<T>(path: string, body: unknown): Promise<T> {
+async function ghl<T>(path: string, body: unknown, method = 'POST'): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
-    method: 'POST',
+    method,
     headers: {
       Authorization: `Bearer ${process.env.GHL_PRIVATE_INTEGRATION_TOKEN}`,
       Version: API_VERSION, 'Content-Type': 'application/json', Accept: 'application/json',
@@ -51,14 +51,15 @@ export async function POST(request: Request) {
   }
 
   const { firstName, lastName } = splitName(lead.name);
-  let contactId: string;
+  let contactId: string, isNew: boolean;
   try {
     // no tags here: on upsert GHL replaces all of a returning contact's tags
-    const upsert = await ghl<{ contact: { id: string } }>('/contacts/upsert', {
+    const upsert = await ghl<{ new?: boolean; contact: { id: string } }>('/contacts/upsert', {
       locationId: GHL_LOCATION_ID, firstName, lastName, name: lead.name,
       email: lead.email, phone: toE164(lead.phone), source: 'Website quote form',
     });
     contactId = upsert.contact.id;
+    isNew = upsert.new === true;
   } catch (err) {
     console.error('[lead] contact upsert failed:', err);
     return Response.json({ error: 'crm_unavailable' }, { status: 502 });
@@ -71,8 +72,12 @@ export async function POST(request: Request) {
     ip: request.headers.get('x-forwarded-for')?.split(',')[0].trim(),
     userAgent: request.headers.get('user-agent') ?? undefined,
   });
+  const tags = `/contacts/${contactId}/tags`;
   const results = await Promise.allSettled([
-    ghl(`/contacts/${contactId}/tags`, { tags: ['website lead', lead.service] }),
+    // GHL's "tag added" trigger (instant reply, staff alert) only fires when the tag is new,
+    // so a returning contact loses it first and every request fires the workflow again
+    (isNew ? Promise.resolve() : ghl(tags, { tags: ['website lead'] }, 'DELETE'))
+      .then(() => ghl(tags, { tags: ['website lead', lead.service] })),
     ghl(`/contacts/${contactId}/notes`, { body: note }),
     ghl('/opportunities/', {
       locationId: GHL_LOCATION_ID, pipelineId: GHL_PIPELINE_ID, pipelineStageId: GHL_PIPELINE_STAGE_ID,
