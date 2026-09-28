@@ -567,7 +567,13 @@ main > .filter-section:first-child { margin-top: 0; padding-top: calc(var(--head
 }
 
 /* ============ HERO: SHOWCASE LAYOUT ============ */
-.hero-showcase { padding-bottom: clamp(56px, 7vw, 96px); }
+/* the hero owns the first screen: exactly one viewport tall, so no section below it peeks.
+   svh = the viewport with the mobile browser bars showing, so the CTAs are never cut off. */
+.hero-showcase {
+  min-height: 100vh; min-height: 100svh;
+  display: grid; align-content: center;
+  padding-bottom: clamp(40px, 6vh, 96px);
+}
 /* the job photo stays visible but quiet: desaturated under a light wash, strongest behind the copy */
 .hero-showcase .hero-bg img { filter: saturate(.6); }
 .hero-showcase::before {
@@ -582,7 +588,7 @@ main > .filter-section:first-child { margin-top: 0; padding-top: calc(var(--head
 .proof-rating .stars svg { width: 15px; height: 15px; }
 
 /* one tall tile beside two stacked ones, each a service photo with its name */
-.bento { display: grid; grid-template-columns: 1.15fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; height: clamp(440px, 40vw, 560px); }
+.bento { display: grid; grid-template-columns: 1.15fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; height: min(clamp(440px, 40vw, 560px), 62svh); }
 .bento-tile { position: relative; min-height: 0; border-radius: 18px; overflow: hidden; background: var(--ink-2); isolation: isolate; }
 .bento-tile.tall { grid-row: 1 / span 2; }
 .bento.count-2 .bento-tile:not(.tall) { grid-row: 1 / span 2; }
@@ -591,9 +597,14 @@ main > .filter-section:first-child { margin-top: 0; padding-top: calc(var(--head
 .bento-tile::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(21, 19, 15, .55) 0%, rgba(21, 19, 15, 0) 45%); }
 .bento-tile:hover img { transform: scale(1.04); }
 .bento-tile .pill-tag { font-size: 12px; }
-@media (max-width: 1080px) {
+@media (max-width: 960px) {
   .showcase-grid { grid-template-columns: 1fr; }
-  .bento { height: clamp(340px, 80vw, 540px); }
+  .bento { height: min(clamp(340px, 80vw, 540px), 42svh); }
+}
+/* stacked under the copy on a short screen there is no room for both: the same service
+   photos are in the services section right below */
+@media (max-width: 960px) and (max-height: 900px) {
+  .hero-showcase .bento { display: none; }
 }
 @media (max-width: 640px) {
   .bento { gap: 8px; }
@@ -696,6 +707,8 @@ main > .filter-section:first-child { margin-top: 0; padding-top: calc(var(--head
 .prose .needed.block { justify-content: flex-start; text-align: left; margin: 16px 0; }
 
 /* ============ QUOTE MODAL ============ */
+/* the calendar needs more room than the short form */
+.quote-modal.wide { width: min(780px, calc(100vw - 24px)); }
 .quote-modal {
   width: min(520px, calc(100vw - 24px)); max-width: none; max-height: calc(100dvh - 24px);
   padding: 0; border: 0; border-radius: 26px; background: var(--white); color: var(--text);
@@ -705,20 +718,33 @@ main > .filter-section:first-child { margin-top: 0; padding-top: calc(var(--head
 .quote-modal[open] { animation: modal-in .28s var(--ease); }
 @keyframes modal-in { from { opacity: 0; transform: translateY(14px) scale(.98); } }
 html:has(.quote-modal[open]) { overflow: hidden; }
-.quote-modal-inner { position: relative; padding: clamp(24px, 4vw, 34px); }
-.quote-modal .form-title { padding-right: 48px; }
+.quote-modal-inner { position: relative; padding: 0 clamp(24px, 4vw, 34px) clamp(24px, 4vw, 34px); }
+.quote-modal-head {
+  position: sticky; top: 0; z-index: 3; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;
+  padding: clamp(20px, 3vw, 28px) clamp(24px, 4vw, 34px) 14px; background: var(--white);
+}
 .quote-modal-close {
-  position: absolute; top: 18px; right: 18px; display: grid; place-items: center; width: 40px; height: 40px;
+  flex-shrink: 0; display: grid; place-items: center; width: 40px; height: 40px;
   border-radius: 50%; background: var(--paper); transition: background-color .2s;
 }
 .quote-modal-close:hover { background: var(--sand); }
 .quote-modal-close svg { width: 18px; height: 18px; }
+.modal-tabs {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin: 18px 0; padding: 5px;
+  border-radius: 999px; background: var(--paper);
+}
+.modal-tabs button {
+  min-height: 42px; border-radius: 999px; font-size: 14.5px; font-weight: 700; color: var(--muted);
+  transition: background-color .2s, color .2s;
+}
+.modal-tabs button[aria-selected="true"] { background: var(--white); color: var(--text); box-shadow: var(--shadow-card); }
+.modal-booking iframe { width: 100%; min-height: min(640px, 70dvh); border: 0; }
 .quote-modal-call { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; font-size: 14.5px; font-weight: 700; color: var(--muted); }
 .quote-modal-call svg { width: 15px; height: 15px; color: var(--gold-text); }
 .quote-modal-call:hover { color: var(--text); }
 @media (max-width: 640px) {
-  /* full-screen sheet on phones */
-  .quote-modal { width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; border-radius: 0; }
+  /* full-screen sheet on phones, calendar tab included */
+  .quote-modal, .quote-modal.wide { width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; border-radius: 0; }
 }
 
 /* ============ TOUCH SIZING (phones) ============ */

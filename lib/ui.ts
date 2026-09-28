@@ -55,6 +55,9 @@ export const UI_DEFAULTS = {
   backToTopLabel: 'Back to top',
   mapTitle: 'Map of the {business} service area in {area}',
   bookingTitle: 'Book an appointment',
+  // quote modal tabs, shown only when a booking calendar is configured
+  quoteTabLabel: 'Request a quote',
+  bookTabLabel: 'Book a time',
   // before / after + video
   beforeLabel: 'Before',
   afterLabel: 'After',

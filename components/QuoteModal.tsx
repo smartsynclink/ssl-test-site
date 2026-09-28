@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import QuoteForm from './QuoteForm';
 import { Close, Phone } from './icons';
 import type { Settings } from '@/lib/types';
@@ -18,6 +18,8 @@ export default function QuoteModal({ settings, serviceArea, consentText, heading
   settings: Settings; serviceArea: string; consentText?: string; heading?: string; emphasis?: string;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
+  const calendar = settings.integrations?.calendarEmbedUrl;
+  const [tab, setTab] = useState<'quote' | 'book'>('quote');
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -37,18 +39,46 @@ export default function QuoteModal({ settings, serviceArea, consentText, heading
   const lead = emphasis && title.endsWith(emphasis) ? title.slice(0, -emphasis.length) : title;
 
   return (
-    <dialog ref={dialog} className="quote-modal" aria-labelledby="quote-modal-title"
+    <dialog ref={dialog} className={`quote-modal${tab === 'book' ? ' wide' : ''}`} aria-labelledby="quote-modal-title"
       // a click on the backdrop lands on the <dialog> itself
       onClick={e => { if (e.target === e.currentTarget) dialog.current?.close(); }}
       // explicit, because some embedded browsers don't turn Escape into the native close request
       onKeyDown={e => { if (e.key === 'Escape') { e.preventDefault(); dialog.current?.close(); } }}>
-      <div className="quote-modal-inner">
-        <button type="button" className="quote-modal-close" aria-label={uiText(settings.ui, 'closeLabel')}
-          onClick={() => dialog.current?.close()}><Close /></button>
+      {/* the head stays put while the panel scrolls: with a calendar embedded, Escape
+          cannot reach this page from inside GHL's frame, so close must always be in view */}
+      <div className="quote-modal-head">
         <p className="form-title" id="quote-modal-title">
           {lead}{emphasis && title.endsWith(emphasis) && <em>{emphasis}</em>}
         </p>
-        <QuoteForm settings={settings} formId="modalForm" serviceArea={serviceArea} consentText={consentText} />
+        <button type="button" className="quote-modal-close" aria-label={uiText(settings.ui, 'closeLabel')}
+          onClick={() => dialog.current?.close()}><Close /></button>
+      </div>
+      <div className="quote-modal-inner">
+        {/* the calendar tab only exists once a booking calendar is set in Site Settings */}
+        {calendar && (
+          <div className="modal-tabs" role="tablist">
+            {(['quote', 'book'] as const).map(name => (
+              <button key={name} type="button" role="tab" id={`quote-modal-tab-${name}`}
+                aria-selected={tab === name} aria-controls="quote-modal-panel"
+                onClick={() => setTab(name)}>
+                {uiText(settings.ui, name === 'quote' ? 'quoteTabLabel' : 'bookTabLabel')}
+              </button>
+            ))}
+          </div>
+        )}
+        <div id="quote-modal-panel" role={calendar ? 'tabpanel' : undefined}
+          aria-labelledby={calendar ? `quote-modal-tab-${tab}` : undefined}>
+          {calendar && tab === 'book' ? (
+            <div className="modal-booking">
+              {/* no GHL resize helper: it hides the frame until the widget reports back, and
+                  that message can beat the script, leaving a blank modal. Fixed height, the
+                  calendar scrolls inside it. */}
+              <iframe src={calendar} title={uiText(settings.ui, 'bookingTitle')} />
+            </div>
+          ) : (
+            <QuoteForm settings={settings} formId="modalForm" serviceArea={serviceArea} consentText={consentText} />
+          )}
+        </div>
         <a href={settings.phoneHref} className="quote-modal-call">
           <Phone />{uiText(settings.ui, 'stickyCallLabel')}: {settings.phone}
         </a>

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Script from 'next/script';
 import Link from 'next/link';
 import { PortableText } from '@portabletext/react';
 import { urlFor } from '@/sanity/image';
@@ -690,8 +689,6 @@ const Booking = ({ s, settings }: { s: Section; settings: Settings }) => {
         <div className="booking-frame">
           <iframe src={url} title={f(s, 'buttonLabel') || t(settings, 'bookingTitle')} loading="lazy" scrolling="no" />
         </div>
-        {/* GHL's embed helper resizes the calendar to its content */}
-        <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="lazyOnload" />
       </div>
     </section>
   );

@@ -1,5 +1,4 @@
 'use client';
-import Script from 'next/script';
 import { useState } from 'react';
 import type { Settings } from '@/lib/types';
 import { uiText, type UiKey } from '@/lib/ui';
@@ -17,9 +16,10 @@ export default function QuoteForm({ settings, formId, serviceArea, consentText }
     const height = settings.integrations?.ghlFormHeight ?? 620;
     return (
       <div style={{ minHeight: height }}>
+        {/* no GHL resize helper: it can hide the frame and never reveal it, so the height
+            is reserved here and the form scrolls inside it */}
         <iframe src={embed} title={uiText(settings.ui, 'submitLabel')} loading="lazy"
           style={{ width: '100%', height, border: 'none', display: 'block' }} />
-        <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="lazyOnload" />
       </div>
     );
   }
