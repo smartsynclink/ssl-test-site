@@ -47,6 +47,9 @@ export const UI_DEFAULTS = {
   serviceCountOne: '{count} service',
   serviceCountMany: '{count} services',
   reviewsWidgetTitle: 'Google reviews',
+  reviewsSliderLabel: 'Customer reviews',
+  prevReviewsLabel: 'Previous reviews',
+  nextReviewsLabel: 'More reviews',
   // coverage + navigation
   responseTimeLabel: 'Response time',
   nearbyAreasLabel: 'Nearby areas also covered',

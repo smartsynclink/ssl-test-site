@@ -9,6 +9,7 @@ import Needed from './Needed';
 import Reveal from './Reveal';
 import HeroBg from './HeroBg';
 import BeforeAfter from './BeforeAfter';
+import ReviewSlider from './ReviewSlider';
 import AboutVideo from './AboutVideo';
 import FaqList from './FaqList';
 import QuoteForm from './QuoteForm';
@@ -476,6 +477,7 @@ const Reviews = ({ s, settings, city }: { s: Section; settings: Settings; city?:
   const reviews = local.length ? local : all;
   const missingLocal = f(s, 'local') && city && !local.length;
   const widget = settings.integrations?.reviewsWidgetUrl;
+  const showWidget = !!f(s, 'showWidget');
   const avg = reviews.length
     ? reviews.reduce((t, r) => t + (r.rating ?? 5), 0) / reviews.length : 0;
   const summary = reviews.length > 0 && (
@@ -489,27 +491,30 @@ const Reviews = ({ s, settings, city }: { s: Section; settings: Settings; city?:
       <div className="container">
         <Head s={s} action={summary} />
         {missingLocal && <Needed block what={`Reviews from ${city} customers (add the city to each review)`} />}
-        <div className="review-grid">
-          {reviews.map(r => (
-            <Reveal key={r._id}>
-              <article className="review-card">
-                <Stars n={r.rating ?? 5} label={t(settings, 'starsLabel', { count: r.rating ?? 5 })} />
-                <p>&ldquo;{r.quote}&rdquo;</p>
-                <div className="review-author">
-                  <span className="avatar">{r.initials}</span>
-                  <span><strong>{r.author}</strong>
-                    <small>{r.city ?? <Needed what="City" />}</small></span>
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        {f(s, 'showWidget') && (
+        {/* the client's Google reviews are the real thing, so they win when the widget is
+            configured; the reviews stored in Sanity are the fallback until then */}
+        {showWidget && widget ? (
           <div className="reviews-widget">
-            {widget
-              ? <iframe src={widget} title={t(settings, 'reviewsWidgetTitle')} loading="lazy" />
-              : <Needed block what="Google reviews widget (GHL Reputation embed URL in Site Settings)" />}
+            <iframe src={widget} title={t(settings, 'reviewsWidgetTitle')} loading="lazy" />
           </div>
+        ) : (
+          <>
+            {showWidget && <Needed block what="Google reviews widget (GHL Reputation embed URL in Site Settings)" />}
+            <ReviewSlider label={t(settings, 'reviewsSliderLabel')}
+              prevLabel={t(settings, 'prevReviewsLabel')} nextLabel={t(settings, 'nextReviewsLabel')}>
+              {reviews.map(r => (
+                <article className="review-card" key={r._id}>
+                  <Stars n={r.rating ?? 5} label={t(settings, 'starsLabel', { count: r.rating ?? 5 })} />
+                  <p>&ldquo;{r.quote}&rdquo;</p>
+                  <div className="review-author">
+                    <span className="avatar">{r.initials}</span>
+                    <span><strong>{r.author}</strong>
+                      <small>{r.city ?? <Needed what="City" />}</small></span>
+                  </div>
+                </article>
+              ))}
+            </ReviewSlider>
+          </>
         )}
         {f(s, 'ctaLabel') && (
           <div className="after-grid center"><Btn href={f(s, 'ctaHref') ?? '#quote'}>{f(s, 'ctaLabel')}</Btn></div>
