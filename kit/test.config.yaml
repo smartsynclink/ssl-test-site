@@ -1,0 +1,58 @@
+# Test client for the site-builder plugin -- see the Site Builder Test Guide.
+# /new-site leaves this file out of client sites.
+# TEST business for checking the site builder. Not a real company.
+business:
+  name: TEST Roofing Co
+  phone: (555) 010-0199
+  email: test@example.com
+  hours: Mon – Fri, 8:00 AM – 5:00 PM
+  serviceAreaLabel: Greater Dallas, TX
+  founded: 2015
+  licenseNumber:            # left empty on purpose: should show as a gap
+  google:
+    rating:                 # left empty on purpose
+    reviewCount:
+  credentials: [Licensed & Insured]
+
+brand:                      # navy + amber + Inter, to check styling comes from the config
+  accent: "#f59e0b"
+  dark: "#0f1f3d"
+  font: inter
+
+services:
+  - id: roofing
+    title: Roof Repair & Replacement
+    slug: roofing
+    services: [Roof Repair, Roof Replacement, Storm Damage Inspection]
+  - id: gutters
+    title: Gutter Services
+    slug: gutters
+    services: [Gutter Installation, Gutter Cleaning, Gutter Guards]
+
+areas:
+  - { name: Dallas, slug: dallas, nearby: [plano, irving] }
+  - { name: Plano, slug: plano, nearby: [dallas, irving] }
+  - { name: Irving, slug: irving, nearby: [dallas, plano] }
+areasNote: "& surrounding Dallas areas"
+
+reviews:
+  - author: TEST Reviewer A.
+    city: Plano
+    rating: 5
+    source: Test
+    quote: TEST REVIEW. The crew replaced our roof in two days and cleaned up every nail.
+  - author: TEST Reviewer B.
+    rating: 5
+    source: Test
+    quote: TEST REVIEW. Fast storm damage inspection and a clear written quote.
+
+context:
+  notes: |
+    TEST business for checking the site builder -- not a real company.
+    Family-owned roofing and gutter contractor, residential only.
+    Free written quotes. Photos of every job before and after.
+
+setup:
+  slug: test-roofing
+  githubRepo: smartsynclink/test-roofing-site
+  vercelTeam:               # leave empty: /deploy-site will ask

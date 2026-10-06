@@ -40,7 +40,7 @@ way you can't fix yourself; never skip a check to get to the end.
 git clone --depth 1 <template-url> <target> && cd <target>
 rm -rf .git && git init -q -b main
 # template-only files that don't belong in a client site
-rm -rf plugin .claude-plugin clients public/video public/img
+rm -rf plugin .claude-plugin clients public/video public/img kit/test.config.yaml
 ```
 
 Copy the config to `<target>/site.config.yaml`. If it references images, copy
