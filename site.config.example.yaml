@@ -110,6 +110,7 @@ setup:
   githubRepo:               # e.g. smartsynclink/acme-site
   vercelTeam:               # Vercel team slug
   vercelProject:
+  sanityOrganization:       # optional: Sanity organization id to create the project in
   sanityProjectId:
   sanityDataset: production
   ghl:                      # IDs only; the token is a secret and lives in .env.local
