@@ -30,6 +30,9 @@ Read `site.config.yaml` for `setup.*` throughout.
 ```bash
 vercel project add <project> --scope <team>      # "already exists" is fine
 vercel link --yes --project <project> --team <team>
+# `project add` leaves the preset on "Other", which fails the deploy ("No Output Directory named dist")
+vercel api "/v9/projects/<project>?teamId=<team>" -X PATCH -f framework=nextjs --silent
+vercel project inspect <project> --scope <team> | grep "Framework Preset"   # must say Next.js
 vercel git connect --yes                          # auto-deploy on every push to main
 ```
 
