@@ -42,3 +42,5 @@ next-env.d.ts
 
 #AI
 .claude
+# client configs being worked on locally (each client repo keeps its own site.config.yaml)
+/clients/

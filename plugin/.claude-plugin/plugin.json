@@ -1,0 +1,6 @@
+{
+  "name": "site-builder",
+  "version": "0.1.0",
+  "description": "/new-site builds a client site from the SmartSyncLink template and a site.config.yaml; /push-site puts it on GitHub; /deploy-site puts it on Vercel.",
+  "author": { "name": "SmartSyncLink" }
+}

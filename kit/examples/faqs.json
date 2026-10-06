@@ -1,0 +1,77 @@
+[
+  {
+    "id": "are-you-licensed-and-insured",
+    "question": "Are you licensed and insured?",
+    "answer": "Yes. Lumen Home Services is licensed and insured, and we'll gladly send over documentation if you need it for your records."
+  },
+  {
+    "id": "can-you-tell-if-my-chimney-needs-a-full-",
+    "question": "Can you tell if my chimney needs a full rebuild or just a repair?",
+    "answer": "That's exactly what the inspection is for. Most chimneys need targeted repairs, not full rebuilds, and we'll only recommend what the inspection actually shows."
+  },
+  {
+    "id": "do-you-clean-the-hvac-unit-itself-or-jus",
+    "question": "Do you clean the HVAC unit itself, or just the ducts?",
+    "answer": "Both, if that's what your system needs. HVAC system cleaning and evaporator coil cleaning are separate line items from duct cleaning because they're different jobs, and we'll tell you honestly which ones actually apply to your setup."
+  },
+  {
+    "id": "do-you-work-on-gas-fireplaces-too-not-ju",
+    "question": "Do you work on gas fireplaces too, not just wood-burning ones?",
+    "answer": "Yes. Gas line capping and gas fireplace repairs are part of what we handle, alongside traditional wood-burning chimney work."
+  },
+  {
+    "id": "how-do-i-know-if-my-attic-insulation-nee",
+    "question": "How do I know if my attic insulation needs attention?",
+    "answer": "Uneven room temperatures, climbing energy bills, and visibly thin insulation are the usual signs. We can inspect your attic and tell you exactly where things stand."
+  },
+  {
+    "id": "how-do-i-know-if-my-dryer-vent-needs-cle",
+    "question": "How do I know if my dryer vent needs cleaning instead of just repair?",
+    "answer": "If your dryer is taking longer to dry clothes, running hot, or you can't remember the last time it was serviced, that's usually lint buildup, not a mechanical issue with the vent itself."
+  },
+  {
+    "id": "how-do-i-schedule-a-visit",
+    "question": "How do I schedule a visit?",
+    "answer": "Request a quote online or call us directly, and we'll get you on the schedule, usually within the week."
+  },
+  {
+    "id": "how-often-should-air-ducts-be-cleaned",
+    "question": "How often should air ducts be cleaned?",
+    "answer": "Most homes do well with duct cleaning every two to three years. Pets, allergies, or a recent renovation can shorten that. We'll take a look and give you a straight answer."
+  },
+  {
+    "id": "what-areas-do-you-serve",
+    "question": "What areas do you serve?",
+    "answer": "We serve Austin and the surrounding Greater Austin area, including Round Rock, Pflugerville, Cedar Park, Leander, Georgetown, Hutto, Taylor, Manor, Lakeway, Bee Cave, Buda, Kyle, and Dripping Springs."
+  },
+  {
+    "id": "what-type-of-insulation-do-you-install",
+    "question": "What type of insulation do you install?",
+    "answer": "We'll assess your attic and recommend the right material and R-value for your home, not a default pick."
+  },
+  {
+    "id": "whats-a-bird-guard-and-do-i-actually-nee",
+    "question": "What's a bird guard, and do I actually need one?",
+    "answer": "It's a small cover over your exterior vent opening that keeps birds and rodents from nesting inside your ductwork. If your current cap is missing or damaged, it's a quick fix worth doing."
+  },
+  {
+    "id": "whats-included-in-a-chimney-service",
+    "question": "What's included in a chimney service?",
+    "answer": "Depending on condition, that can mean a crown rebuild, firebox repair, or fireplace panel replacement. We inspect first and only recommend what's actually needed."
+  },
+  {
+    "id": "why-does-dryer-vent-cleaning-matter",
+    "question": "Why does dryer vent cleaning matter?",
+    "answer": "Lint buildup restricts airflow, makes your dryer work harder, and is one of the leading causes of house fires. Regular cleaning keeps it running safely."
+  },
+  {
+    "id": "will-duct-cleaning-actually-lower-my-ene",
+    "question": "Will duct cleaning actually lower my energy bill?",
+    "answer": "Clean ducts and a clean coil let your system move air the way it was designed to, which usually means less strain on the equipment and steadier energy use. It's not a guaranteed dollar figure, but it's one of the more direct ways to help your system run efficiently."
+  },
+  {
+    "id": "will-this-help-in-summer-too-or-just-win",
+    "question": "Will this help in summer too, or just winter?",
+    "answer": "Both. Good attic insulation keeps conditioned air in and outside heat out year-round, so it affects your cooling costs in summer just as much as heating in winter."
+  }
+]

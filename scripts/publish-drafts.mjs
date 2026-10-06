@@ -13,7 +13,7 @@ import { createClient } from 'next-sanity';
 import { checkPages } from './check-content.mjs';
 
 const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? 'w2d9vne3',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
   apiVersion: '2024-10-01', token: process.env.SANITY_API_WRITE_TOKEN, useCdn: false, perspective: 'raw',
 });

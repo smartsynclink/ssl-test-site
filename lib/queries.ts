@@ -9,6 +9,8 @@ export const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   serviceCategories[]{ ..., image${IMAGE} }
 }`;
 
+export const BRAND_QUERY = groq`*[_type == "siteSettings"][0].brand`;
+
 const SECTIONS = `sections[]{
   ...,
   images[]${IMAGE},

@@ -8,9 +8,10 @@
  * sanity/schemas/sections.ts, so there is no second list to keep in sync.
  *
  * Fails on: unknown section types, fields a section type doesn't define,
- * duplicate section keys, references to documents that don't exist, and
+ * duplicate section keys, references to documents that don't exist,
  * literal "[CONTENT NEEDED]" text stored in content (placeholders are rendered
- * from missing data, never written).
+ * from missing data, never written), and a Site Settings brand the site can't
+ * use (bad hex, unknown font, colours that fail WCAG AA).
  *
  * CLI: node --env-file=.env.local scripts/check-content.mjs   (checks what localhost shows: drafts over published)
  *      node scripts/check-content.mjs --self-test                (the gate's own test, no network)
@@ -18,6 +19,7 @@
 import { createClient } from 'next-sanity';
 
 const { sectionTypes } = await import('../sanity/schemas/sections.ts');
+const { brandProblem } = await import('../lib/brand.ts');
 const SYSTEM = new Set(['_key', '_type']);
 const allowed = new Map(sectionTypes.map(t => [t.name, new Set(t.fields.map(f => f.name))]));
 
@@ -60,22 +62,29 @@ if (process.argv.includes('--self-test')) {
     if (!problems.some(p => p.includes(e))) throw new Error(`gate missed: ${e}`);
   }
   if (checkPages([{ ...page, sections: [page.sections[0]] }], new Set()).length) throw new Error('valid page flagged');
+  if (brandProblem({}) || brandProblem({ accent: '#c9a227', dark: '#15130f', font: 'inter' })) throw new Error('template brand flagged');
+  for (const bad of [{ accent: 'gold' }, { accent: '#1e3a8a' }, { dark: '#777777' }, { font: 'comic-sans' }]) {
+    if (!brandProblem(bad)) throw new Error(`brand gate missed: ${JSON.stringify(bad)}`);
+  }
   console.log('check-content self-test ok');
   process.exit(0);
 }
 
 if (process.argv[1]?.endsWith('check-content.mjs')) {
   const client = createClient({
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? 'w2d9vne3',
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
     apiVersion: '2024-10-01', token: process.env.SANITY_API_READ_TOKEN, useCdn: false, perspective: 'drafts',
   });
-  const [pages, ids] = await Promise.all([
+  const [pages, ids, brand] = await Promise.all([
     client.fetch('*[_type == "page"]'),
     client.withConfig({ perspective: 'raw' }).fetch('*[]._id'),
+    client.fetch('*[_type == "siteSettings"][0].brand'),
   ]);
   const existing = new Set(ids.map(id => id.replace(/^drafts\./, '')));
   const problems = checkPages(pages, existing);
+  const brandIssue = brandProblem(brand ?? {});
+  if (brandIssue) problems.push(`Site Settings brand: ${brandIssue} (the site ignores it and uses the template look)`);
   console.log(problems.length
     ? `✗ ${problems.length} problem(s):\n  ${problems.join('\n  ')}`
     : `✓ ${pages.length} pages use only the template's ${allowed.size} section types`);

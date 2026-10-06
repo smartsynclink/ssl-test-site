@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity';
 import { UI_DEFAULTS } from '../../lib/ui';
+import { brandProblem, FONT_OPTIONS, type Brand } from '../../lib/brand';
 
 /**
  * Single source of truth for everything that appears on more than one page:
@@ -14,6 +15,7 @@ export default defineType({
   type: 'document',
   groups: [
     { name: 'business', title: 'Business (NAP)', default: true },
+    { name: 'brand', title: 'Brand' },
     { name: 'nav', title: 'Navigation' },
     { name: 'taxonomy', title: 'Services & Areas' },
     { name: 'integrations', title: 'Integrations' },
@@ -73,6 +75,17 @@ export default defineType({
         { name: 'facebook', type: 'url' },
         { name: 'instagram', type: 'url' },
         { name: 'yelp', type: 'url' },
+      ],
+    }),
+
+    defineField({
+      name: 'brand', type: 'object', group: 'brand',
+      description: 'Leave any of these empty to keep the template look: gold on warm ink, Plus Jakarta Sans.',
+      validation: r => r.custom(b => brandProblem((b ?? {}) as Brand) ?? true),
+      fields: [
+        { name: 'accent', type: 'string', description: 'Buttons, stars and highlights, as hex (e.g. #c9a227). Button text is the dark colour, so the accent must be light enough to read it on.' },
+        { name: 'dark', type: 'string', description: 'Header, dark bands and footer, as hex (e.g. #15130f).' },
+        { name: 'font', type: 'string', options: { list: [...FONT_OPTIONS] } },
       ],
     }),
 

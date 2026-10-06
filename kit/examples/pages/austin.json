@@ -1,0 +1,160 @@
+{
+  "title": "Austin's Trusted Air Duct, Chimney & HVAC Experts",
+  "slug": "austin",
+  "seo": {
+    "title": "Lumen Home Services | Air Duct, Chimney, Dryer Vent & HVAC in Austin, TX",
+    "description": "Lumen Home Services handles air duct cleaning, chimney work, dryer vent cleaning, HVAC cleaning, and attic insulation across Austin, Texas. Licensed, insured, and every job documented."
+  },
+  "sections": [
+    {
+      "_type": "heroSection",
+      "consentText": "I agree to receive calls, texts, and emails from Lumen Home Services about my request. Msg & data rates may apply.",
+      "formHeading": "Get Your Free Quote",
+      "formHeadingEmphasis": "Free Quote",
+      "headingLines": [
+        "Austin's Trusted Air Duct, Chimney & HVAC Experts"
+      ],
+      "intro": "Plus dryer vent cleaning & attic insulation. All backed by licensed, certified technicians serving Austin homeowners."
+    },
+    {
+      "_type": "proseSection",
+      "body": [
+        "Austin is the capital of Texas and, for Lumen Home Services, it's home base. Nothing tests a home's air system quite like a Central Texas summer that camps out above 95 degrees for weeks at a stretch, and in Austin that heat runs into one of the most varied housing stocks in the state. West of downtown, homes sit on Hill Country limestone, with the terrain climbing into ridges and bluffs that shape everything from foundations to how ductwork gets routed through a crawlspace. East of I-35, the land flattens into blackland prairie, and the neighborhoods there range from century-old bungalows to sprawling new construction pushing the city limits further every year. Add in a decade-plus of tech-driven population growth that's filled in every corner of the metro with new subdivisions, infill builds, and renovated older homes, and you get a city where no two HVAC systems are quite alike. Lumen works across all of it, and we treat Austin the way it deserves — as our flagship market, not a stop on the way to somewhere else.",
+        "### HVAC & Air Duct Cleaning Across Austin",
+        "An Austin air conditioner runs harder and longer than almost anywhere else in the country, and the ductwork behind that system accumulates dust, allergens, and debris fast. In central Austin's older homes, duct runs have often been reworked through multiple renovations and additions, with gaps, disconnects, and buildup that quietly rob a system of efficiency. In the newer construction spreading across the suburbs and infill lots, ducts are younger but frequently packed with construction dust from the build itself. We inspect every system with cameras before we touch anything, clean it thoroughly with commercial-grade equipment, and document the entire job with photos and video, so an Austin homeowner sees exactly what was in their ductwork and exactly what changed.",
+        "### Chimney & Fireplace Care",
+        "Fireplaces show up across Austin in everything from Hill Country stone homes to older central-Austin houses with brick chimneys that have been standing since long before the tech boom. Creosote buildup, cracked flue liners, and blocked dampers are common in chimneys that go years between inspections, and they're a genuine fire hazard. We sweep and inspect thoroughly, checking the firebox and flue from top to bottom and photographing what we find so Austin homeowners know the real condition of their chimney before they light the next fire.",
+        "### Dryer Vent Safety",
+        "Lint-clogged dryer vents are one of the more common and most preventable causes of house fires, and Austin homes see them just as often as anywhere else — long duct runs in older homes, tight builder-grade installations in newer ones. We clear the entire vent path from the dryer to the exterior termination, not just what's reachable from behind the machine, restoring proper airflow and cutting fire risk in the process.",
+        "### Attic Insulation",
+        "Attic insulation is one of the highest-impact upgrades an Austin homeowner can make against the summer heat. Between limestone-terrain homes to the west and blackland-prairie construction to the east, insulation quality varies widely across the metro, and plenty of attics — old and new alike — are underinsulated for how hot Austin actually gets. We evaluate existing coverage, seal air leaks that let conditioned air escape, and bring attics up to levels that actually hold against a Texas summer, which shows up directly in lower cooling bills.",
+        "Every Lumen technician working in Austin is licensed and certified, and every job — HVAC, duct, chimney, dryer vent, or insulation — is documented with before-and-after photos and video so homeowners see the actual work, not just an invoice. As Austin keeps growing and changing, from downtown high-rises to Hill Country hillsides to prairie subdivisions on the east side, Lumen is built to serve the whole city, not just a slice of it."
+      ],
+      "eyebrow": "Local Coverage",
+      "heading": "Austin's HVAC, Air Duct & Home Air Quality Team"
+    },
+    {
+      "_type": "statementSection",
+      "emphasis": "like it's their own.",
+      "text": "Technicians who trained for this, treating your home like it's their own."
+    },
+    {
+      "_type": "servicesSection",
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "eyebrow": "Services",
+      "heading": "What We Do",
+      "subheading": "Four categories of service, from cleaner ducts to a safer chimney."
+    },
+    {
+      "_type": "ctaBand",
+      "heading": "Get A Technician Out This Week",
+      "showCall": true
+    },
+    {
+      "_type": "proofSection",
+      "ctaHref": "/projects",
+      "ctaLabel": "See More Projects",
+      "eyebrow": "Proof",
+      "heading": "Every Job Documented With Photos and Videos",
+      "local": true,
+      "subheading": "You see exactly what we see — before, during, and after the work. No mystery, no guesswork, just clear proof."
+    },
+    {
+      "_type": "reviewsSection",
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "eyebrow": "Reviews",
+      "heading": "What Austin Homeowners Say",
+      "local": true,
+      "reviews": [
+        "Jennifer Schechter",
+        "Daisy Apparel Co.",
+        "Ilai Shvika",
+        "Ori Boganim",
+        "Uriel Guillén Aranda",
+        "Ran Shimon Zarzewski",
+        "Debrah W."
+      ]
+    },
+    {
+      "_type": "aboutSection",
+      "bullets": [
+        "A thorough inspection before any work begins",
+        "Photos of the work, documented every time",
+        "Modern equipment, including UV sanitization",
+        "Straightforward pricing, no last minute surprises"
+      ],
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "heading": "What To Expect From Every Visit",
+      "headingEmphasis": "From Every Visit",
+      "intro": "Every Lumen job gets documented from start to finish, so what you're left with is a real record of the work, not just a promise.",
+      "showCall": true
+    },
+    {
+      "_type": "coverageSection",
+      "eyebrow": "Coverage",
+      "heading": "Serving Austin and Nearby",
+      "mapQuery": "Austin, TX",
+      "responseTime": "Usually on the schedule within the week"
+    },
+    {
+      "_type": "areaSection",
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "eyebrow": "Service Area",
+      "heading": "Proudly Serving Greater Austin",
+      "subheading": "From downtown to the surrounding suburbs, we bring the same certified, documented service to every neighborhood we visit."
+    },
+    {
+      "_type": "faqSection",
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "faqs": [
+        "how-often-should-air-ducts-be-cleaned",
+        "why-does-dryer-vent-cleaning-matter",
+        "whats-included-in-a-chimney-service",
+        "how-do-i-know-if-my-attic-insulation-nee",
+        "are-you-licensed-and-insured"
+      ],
+      "heading": "Questions We Hear A Lot",
+      "items": [
+        {
+          "answer": "Request a quote online or call us directly, and we'll get you on the schedule, usually within the week.",
+          "question": "How soon can you get out to Austin?"
+        },
+        {
+          "answer": "Yes. Along with Austin, we serve Pflugerville, Round Rock and Buda and the rest of Greater Austin.",
+          "question": "Do you also cover the areas around Austin?"
+        },
+        {
+          "answer": "Cleaning work, like duct, dryer vent, and chimney cleaning, doesn't usually need one. Repairs and replacements can, depending on the job and Austin's requirements, so we'll let you know during the inspection.",
+          "question": "Do I need a permit for this work in Austin?"
+        }
+      ]
+    },
+    {
+      "_type": "quoteSection",
+      "consentText": "I agree to receive calls, texts, and emails from Lumen Home Services about my request. Msg & data rates may apply.",
+      "eyebrow": "Contact",
+      "formHeading": "Get Your Free Quote",
+      "formHeadingEmphasis": "Free Quote",
+      "heading": "Get in Touch",
+      "showContactDetails": true,
+      "subheading": "Questions, scheduling, or ready to book? Reach us directly using the details below, or send a message and we'll get back to you shortly."
+    },
+    {
+      "_type": "ctaBand",
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "heading": "Ready For Cleaner Air and Peace of Mind?",
+      "showCall": true
+    },
+    {
+      "_type": "internalLinks",
+      "eyebrow": "Explore",
+      "heading": "Services & Areas Near Austin"
+    }
+  ]
+}

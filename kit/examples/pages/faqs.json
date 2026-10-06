@@ -1,0 +1,77 @@
+{
+  "title": "Questions We Hear A Lot",
+  "slug": "faqs",
+  "seo": {
+    "title": "Frequently Asked Questions | Lumen Home Services",
+    "description": "Answers about air duct, HVAC, chimney, dryer vent, and attic insulation service in Austin, TX. Licensed, certified, and documented every visit."
+  },
+  "sections": [
+    {
+      "_type": "innerHero",
+      "centered": true,
+      "heading": "Questions We Hear A Lot",
+      "intro": "Straight answers about air duct, HVAC, chimney, dryer vent, and attic insulation service, so you know exactly what to expect before we ever step through the door."
+    },
+    {
+      "_type": "faqSection",
+      "faqs": [],
+      "groups": [
+        {
+          "faqs": [
+            "are-you-licensed-and-insured",
+            "what-areas-do-you-serve",
+            "how-do-i-schedule-a-visit"
+          ],
+          "title": "General"
+        },
+        {
+          "faqs": [
+            "how-often-should-air-ducts-be-cleaned",
+            "will-duct-cleaning-actually-lower-my-ene",
+            "do-you-clean-the-hvac-unit-itself-or-jus"
+          ],
+          "title": "Air Duct & HVAC"
+        },
+        {
+          "faqs": [
+            "whats-included-in-a-chimney-service",
+            "can-you-tell-if-my-chimney-needs-a-full-",
+            "do-you-work-on-gas-fireplaces-too-not-ju"
+          ],
+          "title": "Chimney & Fireplace"
+        },
+        {
+          "faqs": [
+            "why-does-dryer-vent-cleaning-matter",
+            "how-do-i-know-if-my-dryer-vent-needs-cle",
+            "whats-a-bird-guard-and-do-i-actually-nee"
+          ],
+          "title": "Dryer Vent"
+        },
+        {
+          "faqs": [
+            "how-do-i-know-if-my-attic-insulation-nee",
+            "what-type-of-insulation-do-you-install",
+            "will-this-help-in-summer-too-or-just-win"
+          ],
+          "title": "Attic Insulation"
+        }
+      ]
+    },
+    {
+      "_type": "ctaBand",
+      "heading": "Still Have Questions? Let's Talk.",
+      "showCall": true
+    },
+    {
+      "_type": "quoteSection",
+      "consentText": "I agree to receive calls, texts, and emails from Lumen Home Services about my request. Msg & data rates may apply.",
+      "eyebrow": "Contact",
+      "formHeading": "Get Your Free Quote",
+      "formHeadingEmphasis": "Free Quote",
+      "heading": "Get Your Free Quote",
+      "showContactDetails": true,
+      "subheading": "Questions, scheduling, or ready to book? Reach us directly using the details below, or send a message and we'll get back to you shortly."
+    }
+  ]
+}

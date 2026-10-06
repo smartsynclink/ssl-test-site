@@ -1,0 +1,180 @@
+{
+  "title": "Cleaner Air Starts With Cleaner Ducts",
+  "slug": "air-duct--hvac-services",
+  "seo": {
+    "title": "Air Duct & HVAC Cleaning in Austin, TX | Lumen Home Services",
+    "description": "Certified air duct and HVAC cleaning, sanitizing, and repair for Austin homes. Cleaner air, better airflow, documented every visit. Free quotes."
+  },
+  "sections": [
+    {
+      "_type": "innerHero",
+      "centered": true,
+      "h1": "Air Duct & HVAC Cleaning in Austin, TX",
+      "heading": "Cleaner Air Starts With Cleaner Ducts",
+      "intro": "Dust, allergens, and buildup move through your whole house every time the system runs. We clean, sanitize, and repair the ductwork and HVAC components that actually control your air quality, and document every step."
+    },
+    {
+      "_type": "breakdownSection",
+      "cards": [
+        {
+          "body": "Removes built-up dust, debris, and allergens from your supply and return lines so the air moving through your home is actually clean.",
+          "title": "Air Duct Cleaning"
+        },
+        {
+          "body": "A more thorough pass for ducts that haven't been serviced in years, or homes coming out of renovation dust and drywall debris.",
+          "title": "Air Duct Deep Cleaning"
+        },
+        {
+          "body": "Treats duct interiors to cut down on mold, bacteria, and odor-causing buildup, especially useful after water damage or illness in the home.",
+          "title": "Air Duct Sanitizing & Disinfection"
+        },
+        {
+          "body": "Sealing gaps, patching damaged sections, or swapping out ductwork that's leaking air, and money, before it can be cleaned properly.",
+          "title": "Air Duct Repair & Replacement"
+        },
+        {
+          "body": "The main junction boxes connecting your ducts to the system get the same close attention, since buildup here affects your whole system.",
+          "title": "Supply & Return Plenum Cleaning & Repair"
+        },
+        {
+          "body": "Cleaning the components inside your HVAC unit itself, not just the ducts, so the whole system moves air the way it's supposed to.",
+          "title": "HVAC System Cleaning"
+        },
+        {
+          "body": "A dirty coil makes your system work harder and cool less. We clean it so your AC runs efficiently again.",
+          "title": "Evaporator Coil Cleaning"
+        },
+        {
+          "body": "UV lights installed inside your system to continuously reduce mold and bacteria growth between cleanings.",
+          "title": "UV Light Installation"
+        }
+      ],
+      "eyebrow": "What's Included",
+      "heading": "Every Air Duct & HVAC Service We Offer"
+    },
+    {
+      "_type": "breakdownSection",
+      "cards": [
+        {
+          "title": "Pets in the home"
+        },
+        {
+          "title": "Allergies in the household"
+        },
+        {
+          "title": "A recent renovation"
+        },
+        {
+          "title": "Dust and allergens moving through the house every time the system runs"
+        }
+      ],
+      "eyebrow": "Who It's For",
+      "heading": "Signs You Need This Service",
+      "variant": "checks"
+    },
+    {
+      "_type": "breakdownSection",
+      "cards": [
+        {
+          "body": "We look at your ductwork and HVAC components first and give you a straight answer on what they need.",
+          "title": "Inspect the system"
+        },
+        {
+          "body": "We clean, sanitize, and repair the ductwork and HVAC components that actually control your air quality.",
+          "title": "Clean, sanitize, and repair"
+        },
+        {
+          "body": "Photos of the work at each stage, so you see exactly what we see.",
+          "title": "Document every step"
+        },
+        {
+          "body": "We show you the before and after photos and explain what to expect from a clean system.",
+          "title": "Walk you through the results"
+        }
+      ],
+      "eyebrow": "Our Process",
+      "heading": "How We Handle This Job",
+      "variant": "steps"
+    },
+    {
+      "_type": "breakdownSection",
+      "cards": [
+        {
+          "body": "We look at your system before quoting, so the price reflects what's actually there.",
+          "title": "What the inspection finds"
+        },
+        {
+          "body": "Cleaning ducts is a different job from sealing gaps, patching damaged sections, or replacing ductwork.",
+          "title": "Cleaning, repair, or replacement"
+        },
+        {
+          "body": "HVAC system cleaning and evaporator coil cleaning are separate line items from duct cleaning.",
+          "title": "Separate line items"
+        },
+        {
+          "body": "Straightforward pricing, no last minute surprises.",
+          "title": "No last-minute surprises"
+        }
+      ],
+      "eyebrow": "Pricing",
+      "heading": "What Affects the Price",
+      "variant": "cards"
+    },
+    {
+      "_type": "ctaBand",
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "heading": "Ready For Cleaner Air This Week?",
+      "showCall": true
+    },
+    {
+      "_type": "proofSection",
+      "eyebrow": "Proof",
+      "heading": "Documented Work",
+      "subheading": "You see exactly what we see, before and after. No mystery, no guesswork."
+    },
+    {
+      "_type": "reviewsSection",
+      "eyebrow": "Reviews",
+      "heading": "What Customers Say",
+      "reviews": [
+        "Jennifer Schechter",
+        "Ori Boganim",
+        "Uriel Guillén Aranda",
+        "Debrah W."
+      ]
+    },
+    {
+      "_type": "faqSection",
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "faqs": [
+        "how-often-should-air-ducts-be-cleaned",
+        "will-duct-cleaning-actually-lower-my-ene",
+        "do-you-clean-the-hvac-unit-itself-or-jus"
+      ],
+      "heading": "Common Questions",
+      "items": [
+        {
+          "answer": "Yes. UV lights installed inside your system continuously reduce mold and bacteria growth between cleanings.",
+          "question": "Do you install UV lights?"
+        }
+      ]
+    },
+    {
+      "_type": "relatedServices",
+      "eyebrow": "Related Services",
+      "heading": "Other Services We Offer"
+    },
+    {
+      "_type": "quoteSection",
+      "consentText": "I agree to receive calls, texts, and emails from Lumen Home Services about my request. Msg & data rates may apply.",
+      "eyebrow": "Contact",
+      "formHeading": "Get Your Free Quote",
+      "formHeadingEmphasis": "Free Quote",
+      "heading": "Get Your Free Air Duct & HVAC Quote",
+      "showContactDetails": true,
+      "subheading": "Questions, scheduling, or ready to book? Reach us directly using the details below, or send a message and we'll get back to you shortly."
+    }
+  ]
+}

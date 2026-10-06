@@ -1,0 +1,14 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "smartsynclink",
+  "description": "SmartSyncLink tools for building client websites from the construction template.",
+  "owner": { "name": "SmartSyncLink" },
+  "plugins": [
+    {
+      "name": "site-builder",
+      "description": "Build a client site from the template and a config file, push it to GitHub, deploy it to Vercel.",
+      "source": "./plugin",
+      "category": "productivity"
+    }
+  ]
+}

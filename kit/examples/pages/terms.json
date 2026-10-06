@@ -1,0 +1,39 @@
+{
+  "title": "Terms of Service",
+  "slug": "terms",
+  "seo": {
+    "title": "Terms of Service | Lumen Home Services",
+    "description": "The terms that apply when you use the Lumen Home Services website."
+  },
+  "sections": [
+    {
+      "_type": "innerHero",
+      "centered": true,
+      "heading": "Terms of Service",
+      "intro": "The terms that apply when you use the Lumen Home Services website.",
+      "showCtas": false
+    },
+    {
+      "_type": "proseSection",
+      "body": [
+        "Last updated: September 2026",
+        "### Using this website",
+        "By using this website you agree to these terms. The site provides information about Lumen Home Services and lets you request quotes and contact us.",
+        "### Quotes and scheduling",
+        "Submitting a request through this website does not create a contract. Any work, pricing, and scheduling are confirmed with you directly before the job begins.",
+        "### Communications",
+        "If you agree to be contacted, you consent to receive calls, texts, and emails about your request as described in our Privacy Policy. You can opt out at any time.",
+        "### Content",
+        "The photos, videos, and text on this website belong to Lumen Home Services and may not be copied or reused without permission.",
+        "### No warranties",
+        "The information on this website is provided for general purposes. We work to keep it accurate but do not guarantee it is complete or current.",
+        "### Limitation of liability",
+        "To the extent allowed by law, Lumen Home Services is not liable for any damages arising from your use of this website.",
+        "### Governing law",
+        "These terms are governed by the laws of the State of Texas.",
+        "### Contact",
+        "Questions about these terms? Call (512) 678-0620 or email info@lumenhomeservices.com, or write to Lumen Home Services, 7920 San Felipe Blvd, Austin, TX 78729."
+      ]
+    }
+  ]
+}

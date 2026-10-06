@@ -1,0 +1,64 @@
+{
+  "title": "Every Job, Documented",
+  "slug": "projects",
+  "seo": {
+    "title": "Projects | Lumen Home Services",
+    "description": "Before-and-after photos and videos of air duct, HVAC, chimney, and dryer vent work across Austin, TX. Every job documented, no guesswork."
+  },
+  "sections": [
+    {
+      "_type": "innerHero",
+      "centered": true,
+      "heading": "Every Job, Documented",
+      "intro": "Photos and videos from real jobs across Austin. Drag any before-and-after to see exactly what changed, no mystery, no guesswork."
+    },
+    {
+      "_type": "filterBar",
+      "filters": [
+        {
+          "label": "All",
+          "value": "all"
+        },
+        {
+          "label": "Before & After",
+          "value": "before-after"
+        },
+        {
+          "label": "Videos",
+          "value": "videos"
+        },
+        {
+          "label": "Photos",
+          "value": "photos"
+        }
+      ]
+    },
+    {
+      "_type": "proofSection",
+      "category": "before-after"
+    },
+    {
+      "_type": "proofSection",
+      "category": "videos"
+    },
+    {
+      "_type": "photoSection",
+      "category": "photos"
+    },
+    {
+      "_type": "ctaBand",
+      "heading": "Ready For Your Home To Look Like This?",
+      "showCall": true
+    },
+    {
+      "_type": "quoteSection",
+      "consentText": "I agree to receive calls, texts, and emails from Lumen Home Services about my request. Msg & data rates may apply.",
+      "eyebrow": "Contact",
+      "formHeading": "Get Your Free Quote",
+      "formHeadingEmphasis": "Free Quote",
+      "heading": "Get Your Free Quote",
+      "showContactDetails": true,
+      "subheading": "Questions, scheduling, or ready to book? Reach us directly using the details below, or send a message and we'll get back to you shortly."
+    }
+  ]
+}

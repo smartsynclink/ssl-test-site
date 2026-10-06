@@ -1,0 +1,71 @@
+{
+  "title": "About Lumen Home Services",
+  "slug": "about",
+  "seo": {
+    "title": "About Us | Lumen Home Services",
+    "description": "Licensed, certified, and locally owned — bringing light to every home with honest, documented work across Greater Austin, TX."
+  },
+  "sections": [
+    {
+      "_type": "innerHero",
+      "centered": true,
+      "eyebrow": "About Us",
+      "heading": "Bringing Light to Every Home",
+      "intro": "Licensed, certified, and locally owned — bringing light to every home with honest, documented work across Greater Austin, TX."
+    },
+    {
+      "_type": "proseSection",
+      "body": [
+        "Lumen Home Services is locally owned and operated, with Austin as home base. We take care of the systems most homeowners never see: air ducts and HVAC, chimneys and fireplaces, dryer vents, and attic insulation.",
+        "Our promise is simple: bringing light to every home with honest, documented work. That means a thorough inspection before any work begins, photos of the work every time, and straightforward pricing with no last minute surprises.",
+        "Every technician is licensed and certified, and treats your home like it's their own. Today we serve homeowners across Greater Austin, TX, from Round Rock, Georgetown, Cedar Park, Buda and Kyle."
+      ],
+      "eyebrow": "Our Story",
+      "heading": "The Team Behind Lumen Home Services"
+    },
+    {
+      "_type": "trustBar"
+    },
+    {
+      "_type": "aboutSection",
+      "bullets": [
+        "A thorough inspection before any work begins",
+        "Photos of the work, documented every time",
+        "Modern equipment, including UV sanitization",
+        "Straightforward pricing, no last minute surprises"
+      ],
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "eyebrow": "Why Choose Us",
+      "heading": "What To Expect From Every Visit",
+      "headingEmphasis": "From Every Visit",
+      "intro": "Every Lumen job gets documented from start to finish, so what you're left with is a real record of the work, not just a promise.",
+      "showCall": true
+    },
+    {
+      "_type": "reviewsSection",
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "eyebrow": "Reviews",
+      "heading": "What Austin Homeowners Say",
+      "reviews": [
+        "Jennifer Schechter",
+        "Daisy Apparel Co.",
+        "Ilai Shvika",
+        "Ori Boganim",
+        "Uriel Guillén Aranda",
+        "Ran Shimon Zarzewski",
+        "Debrah W."
+      ]
+    },
+    {
+      "_type": "quoteSection",
+      "consentText": "I agree to receive calls, texts, and emails from Lumen Home Services about my request. Msg & data rates may apply.",
+      "eyebrow": "Get A Technician Out This Week",
+      "formHeading": "Get Your Free Quote",
+      "formHeadingEmphasis": "Free Quote",
+      "heading": "Ready For Cleaner Air and Peace of Mind?",
+      "showContactDetails": false
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "title": "Privacy Policy",
+  "slug": "privacy-policy",
+  "seo": {
+    "title": "Privacy Policy | Lumen Home Services",
+    "description": "How Lumen Home Services collects, uses, and protects the information you share with us."
+  },
+  "sections": [
+    {
+      "_type": "innerHero",
+      "centered": true,
+      "heading": "Privacy Policy",
+      "intro": "How Lumen Home Services collects, uses, and protects the information you share with us.",
+      "showCtas": false
+    },
+    {
+      "_type": "proseSection",
+      "body": [
+        "Last updated: September 2026",
+        "### Information we collect",
+        "When you request a quote or contact us, we collect the details you enter: your name, phone number, email address, the service you need, and the page you sent the request from. We also keep a record of the consent you give to be contacted.",
+        "### How we use it",
+        "We use this information to respond to your request, prepare your quote, schedule and carry out work, and follow up about that work. We do not sell your personal information.",
+        "### Calls, texts and emails",
+        "If you agree to be contacted, Lumen Home Services may call, text, or email you about your request. Message frequency varies, and message and data rates may apply. Reply STOP to any text to opt out, or HELP for help. Consent is not a condition of purchase.",
+        "Mobile information will not be shared with third parties or affiliates for marketing or promotional purposes. Text messaging opt-in data and consent are not shared with any third parties.",
+        "### Service providers",
+        "We use trusted service providers to run our website, forms, customer messaging, and scheduling. They process your information only to provide those services to us.",
+        "### Cookies and analytics",
+        "Our website may use cookies and analytics tools to understand how visitors use the site and to improve it. You can control cookies through your browser settings.",
+        "### Keeping your information safe",
+        "We keep your information only as long as we need it for the purposes above or as required by law, and we use reasonable safeguards to protect it.",
+        "### Your choices",
+        "You can ask us to update or delete your information, or stop contacting you, at any time by calling (512) 678-0620 or emailing info@lumenhomeservices.com. You can also write to Lumen Home Services, 7920 San Felipe Blvd, Austin, TX 78729.",
+        "### Changes to this policy",
+        "We may update this policy from time to time. The latest version will always be on this page."
+      ]
+    }
+  ]
+}

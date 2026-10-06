@@ -1,0 +1,118 @@
+# Site config -- one per client. Copy this file, fill it in, and run
+#   /new-site <template repo URL> <path to this file>
+#
+# It holds FACTS only. The /new-site prompt writes every page's copy from
+# `context` and copies everything else exactly as written here.
+#
+# Rules
+# - Leave a fact empty when the client hasn't given it. The site then shows
+#   [CONTENT NEEDED] in that spot instead of a guess. Never estimate a number.
+# - Name, address and phone must match the Google Business Profile character
+#   for character -- they are printed on every page.
+# - Reviews are copied word for word. Never shorten or "fix" them.
+# - No secrets here (API tokens). They go in the site's .env.local / Vercel.
+# - Image paths are relative to this file.
+
+business:
+  name:                     # exactly as on GBP, e.g. Acme Home Services
+  phone:                    # exactly as on GBP, e.g. (512) 555-0100 (US numbers)
+  email:
+  address:                  # only if it matches GBP exactly; remove for service-area businesses
+    street:
+    city:
+    region:                 # e.g. TX
+    postalCode: ""          # quoted, so a leading zero survives
+  hours:                    # e.g. Mon – Fri, 8:00 AM – 6:00 PM
+  serviceAreaLabel:         # e.g. Greater Austin, TX
+  founded:                  # year; drives any "X years" claim. Empty = no such claim
+  licenseNumber:
+  google:
+    rating:                 # from GBP, e.g. 4.9
+    reviewCount:
+  social:
+    facebook:
+    instagram:
+    yelp:
+  credentials: []           # what they really hold, e.g. [Licensed & Insured, BBB A+]
+  brandsCarried: []         # manufacturer brands they install
+
+# All optional. Empty = the template look (gold #c9a227 on ink #15130f, Plus Jakarta Sans).
+# accent: buttons and highlights (dark text sits on it, so it must be light enough)
+# dark:   header, dark bands, footer
+# font:   plus-jakarta-sans | inter | montserrat | poppins | dm-sans
+brand:
+  accent:
+  dark:
+  font:
+
+# Each service becomes a page at /<slug>; `services` are the jobs listed on it.
+# When replacing a live site, keep its old URLs as the slugs.
+services:
+  - id:                     # short id, e.g. roofing
+    title:                  # e.g. Roofing Services
+    slug:                   # e.g. roofing-services
+    services: []            # e.g. [Roof Repair, Roof Replacement, Gutter Installation]
+
+# Each area becomes a city page at /<slug>. `nearby` = 2-3 slugs of other areas in this list.
+areas:
+  - { name: , slug: , nearby: [] }
+areasNote:                  # e.g. "& surrounding Greater Austin areas"
+
+# Only offers the client really makes. Empty = never mentioned.
+offers:
+  warranty:
+  financing:
+  guarantee:
+
+# Word for word. `city` only when the review or the client says where the job was.
+reviews:
+  - author:                 # e.g. Debrah W.
+    city:
+    rating: 5
+    source:                 # Google, Yelp, Facebook ...
+    quote: >-
+
+# Public IDs the site shows. Empty = that feature stays hidden.
+integrations:
+  chatWidgetId:             # GHL chat widget ID
+  reviewsWidgetUrl:         # GHL Reputation widget iframe src
+  calendarEmbedUrl:         # GHL booking calendar; empty hides booking
+  gtmId:
+  ga4Id:
+  metaPixelId:
+
+# Photos, by where they go. Everything is optional: a missing photo leaves that
+# spot plain (or flagged [CONTENT NEEDED]) and is listed in REVIEW.md.
+images:
+  logo:                     # e.g. images/logo.png
+  hero: []                  # home + city page hero backgrounds, first one loads first
+  cta:                      # background of the call-to-action bands
+  services: {}              # service id -> photo, e.g. { roofing: images/roof.jpg }
+  pages: {}                 # page slug -> hero photo for that page, e.g. { about: images/team.jpg }
+  projects: []              # before/after jobs:
+  # - { title: Full roof replacement, category: roofing, city: Round Rock, before: images/p1-before.jpg, after: images/p1-after.jpg, caption: }
+  videos: []                # - { title: , category: , file: images/job.mp4, poster: images/job.jpg, caption: }
+  photos: {}                # photo grids by section category: { roofing: [{ file: images/r1.jpg, caption: }] }
+
+# What the copy is written from. The more real detail, the less generic the
+# site. Every claim in the copy must trace back to this block or the facts above.
+context:
+  website:                  # the client's current site, if any
+  googleBusinessProfile:
+  notes: |
+    Who runs it, what they're known for, how they work, what customers praise,
+    anything that makes them different. Open questions go here too.
+
+# Where the site lives. Filled in by /new-site, /push-site and /deploy-site.
+setup:
+  slug:                     # short name for folders and projects, e.g. acme
+  domain:                   # live domain, e.g. https://acmehomeservices.com
+  githubRepo:               # e.g. smartsynclink/acme-site
+  vercelTeam:               # Vercel team slug
+  vercelProject:
+  sanityProjectId:
+  sanityDataset: production
+  ghl:                      # IDs only; the token is a secret and lives in .env.local
+    locationId:
+    pipelineId:
+    stageId:

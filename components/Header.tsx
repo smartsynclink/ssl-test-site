@@ -96,10 +96,10 @@ export default function Header({ settings }: { settings: Settings }) {
 
         <div className="nav-island">
           <Link href="/" className="logo-wrap" aria-label={t('homeLinkLabel', { business: settings.businessName })}>
-            {settings.logo && (
+            {settings.logo ? (
               <Image src={urlFor(settings.logo).width(240).url()} alt={settings.businessName}
                 width={72} height={48} sizes="72px" priority />
-            )}
+            ) : <span className="logo-text">{settings.businessName}</span>}
           </Link>
 
           <nav className="primary-nav" aria-label={t('primaryNavLabel')}>

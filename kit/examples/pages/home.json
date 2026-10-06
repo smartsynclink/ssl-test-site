@@ -1,0 +1,169 @@
+{
+  "title": "Breathe Easier. Live Safer. Feel at Home.",
+  "slug": "home",
+  "isHome": true,
+  "seo": {
+    "title": "Lumen Home Services | Air Duct, Chimney, Dryer Vent & HVAC in Austin, TX",
+    "description": "Lumen Home Services handles air duct cleaning, chimney work, dryer vent cleaning, HVAC cleaning, and attic insulation across Austin, Texas. Licensed, insured, and every job documented."
+  },
+  "sections": [
+    {
+      "_type": "heroSection",
+      "consentText": "I agree to receive calls, texts, and emails from Lumen Home Services about my request. Msg & data rates may apply.",
+      "formHeading": "Get Your Free Quote",
+      "formHeadingEmphasis": "Free Quote",
+      "h1": "Air Duct, Chimney, Dryer Vent & HVAC Services in Austin, TX",
+      "headingLines": [
+        "Breathe Easier.",
+        "Live Safer.",
+        "Feel at Home."
+      ],
+      "intro": "HVAC, duct, dryer vent, chimney, and attic insulation services from a licensed, certified team. Every job documented with photo and video."
+    },
+    {
+      "_type": "trustBar"
+    },
+    {
+      "_type": "statementSection",
+      "emphasis": "like it's their own.",
+      "text": "Technicians who trained for this, treating your home like it's their own."
+    },
+    {
+      "_type": "servicesSection",
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "eyebrow": "Services",
+      "heading": "What We Do",
+      "subheading": "Four categories of service, from cleaner ducts to a safer chimney."
+    },
+    {
+      "_type": "aboutSection",
+      "bullets": [
+        "A thorough inspection before any work begins",
+        "Photos of the work, documented every time",
+        "Modern equipment, including UV sanitization",
+        "Straightforward pricing, no last minute surprises"
+      ],
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "eyebrow": "Why Choose Us",
+      "heading": "What To Expect From Every Visit",
+      "headingEmphasis": "From Every Visit",
+      "intro": "Every Lumen job gets documented from start to finish, so what you're left with is a real record of the work, not just a promise.",
+      "showCall": true
+    },
+    {
+      "_type": "breakdownSection",
+      "cards": [
+        {
+          "body": "Request a quote online or call us directly, and we'll get you on the schedule, usually within the week.",
+          "title": "Request a quote or call"
+        },
+        {
+          "body": "A thorough inspection before any work begins. We inspect first and only recommend what's actually needed.",
+          "title": "Inspection first"
+        },
+        {
+          "body": "Photos of the work, documented every time.",
+          "title": "The work, documented"
+        },
+        {
+          "body": "When the job is done, we show you the after photos and explain what we found, what we did, and what to expect.",
+          "title": "Walkthrough and your record"
+        }
+      ],
+      "eyebrow": "How It Works",
+      "heading": "From First Call to Finished Job",
+      "variant": "steps"
+    },
+    {
+      "_type": "ctaBand",
+      "heading": "Get A Technician Out This Week",
+      "showCall": true
+    },
+    {
+      "_type": "proofSection",
+      "ctaHref": "/projects",
+      "ctaLabel": "See More Projects",
+      "eyebrow": "Proof",
+      "heading": "Every Job Documented With Photos and Videos",
+      "subheading": "You see exactly what we see — before, during, and after the work. No mystery, no guesswork, just clear proof."
+    },
+    {
+      "_type": "badgesSection"
+    },
+    {
+      "_type": "reviewsSection",
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "eyebrow": "Reviews",
+      "heading": "What Austin Homeowners Say",
+      "reviews": [
+        "Jennifer Schechter",
+        "Daisy Apparel Co.",
+        "Ilai Shvika",
+        "Ori Boganim",
+        "Uriel Guillén Aranda",
+        "Ran Shimon Zarzewski",
+        "Debrah W."
+      ],
+      "showWidget": true
+    },
+    {
+      "_type": "areaSection",
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "eyebrow": "Service Area",
+      "heading": "Proudly Serving Greater Austin",
+      "subheading": "From downtown to the surrounding suburbs, we bring the same certified, documented service to every neighborhood we visit."
+    },
+    {
+      "_type": "breakdownSection",
+      "cards": [
+        {
+          "body": "Get your free quote online or by phone.",
+          "title": "Free quotes"
+        },
+        {
+          "body": "Straightforward pricing, no last minute surprises.",
+          "title": "No last-minute surprises"
+        },
+        {
+          "body": "Photos of the work, documented every time, so you see exactly what was done.",
+          "title": "A photo record of every job"
+        }
+      ],
+      "eyebrow": "Offers & Guarantees",
+      "heading": "What Comes With Every Job",
+      "variant": "cards"
+    },
+    {
+      "_type": "faqSection",
+      "ctaHref": "#quote",
+      "ctaLabel": "Request a Quote",
+      "faqs": [
+        "how-often-should-air-ducts-be-cleaned",
+        "why-does-dryer-vent-cleaning-matter",
+        "whats-included-in-a-chimney-service",
+        "how-do-i-know-if-my-attic-insulation-nee",
+        "are-you-licensed-and-insured",
+        "how-do-i-schedule-a-visit"
+      ],
+      "heading": "Questions We Hear A Lot",
+      "items": [
+        {
+          "answer": "It depends on what your home needs, which is why we inspect first. Request a free quote and you'll get straightforward pricing, with no last minute surprises.",
+          "question": "How much will it cost?"
+        }
+      ]
+    },
+    {
+      "_type": "quoteSection",
+      "consentText": "I agree to receive calls, texts, and emails from Lumen Home Services about my request. Msg & data rates may apply.",
+      "formHeading": "Get Your Free Quote",
+      "formHeadingEmphasis": "Free Quote",
+      "heading": "Ready For Cleaner Air and Peace of Mind?",
+      "showContactDetails": false
+    }
+  ]
+}

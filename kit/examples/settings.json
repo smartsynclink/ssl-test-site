@@ -1,0 +1,147 @@
+{
+  "navLinks": [
+    {
+      "href": "/",
+      "label": "Home"
+    },
+    {
+      "href": "/#services",
+      "label": "Services",
+      "menu": "services"
+    },
+    {
+      "href": "/projects",
+      "label": "Projects"
+    },
+    {
+      "href": "/faqs",
+      "label": "FAQs"
+    },
+    {
+      "href": "/#area",
+      "label": "Service Areas",
+      "menu": "areas"
+    },
+    {
+      "href": "/about",
+      "label": "About"
+    },
+    {
+      "href": "/#reviews",
+      "label": "Reviews"
+    },
+    {
+      "href": "/contact",
+      "label": "Contact"
+    }
+  ],
+  "headerCtaLabel": "Request a Quote",
+  "headerCtaHref": "/contact#quote",
+  "footerColumns": [
+    {
+      "fromServiceCategories": true,
+      "links": [],
+      "title": "Services"
+    },
+    {
+      "links": [
+        {
+          "href": "/about",
+          "label": "About"
+        },
+        {
+          "href": "/projects",
+          "label": "Projects"
+        },
+        {
+          "href": "/#reviews",
+          "label": "Reviews"
+        },
+        {
+          "href": "/#area",
+          "label": "Service Area"
+        },
+        {
+          "href": "/faqs",
+          "label": "FAQs"
+        },
+        {
+          "href": "/contact#quote",
+          "label": "Request a Quote"
+        }
+      ],
+      "title": "Company"
+    }
+  ],
+  "footerContactTitle": "Contact",
+  "legalLinks": [
+    {
+      "href": "/privacy-policy",
+      "label": "Privacy Policy"
+    },
+    {
+      "href": "/terms",
+      "label": "Terms of Service"
+    }
+  ],
+  "footerNote": "Licensed, certified, and locally owned — bringing light to every home with honest, documented work across Greater Austin, TX.",
+  "trustItems": [
+    {
+      "icon": "clock",
+      "sub": "Locally owned & operated",
+      "title": "5+ Years Experience"
+    },
+    {
+      "icon": "pin",
+      "sub": "Residential home services",
+      "title": "Serving Austin & Surrounding Areas"
+    },
+    {
+      "icon": "camera",
+      "sub": "Every job photographed",
+      "title": "Before & After Documentation"
+    },
+    {
+      "icon": "heart",
+      "sub": "Professional & reliable service",
+      "title": "Customer Satisfaction Focused"
+    },
+    {
+      "icon": "shield",
+      "sub": "Documentation available on request",
+      "title": "Licensed & Insured"
+    }
+  ],
+  "badges": [
+    {
+      "icon": "google",
+      "title": "Google"
+    },
+    {
+      "icon": "shield",
+      "sub": "Documentation on request",
+      "title": "Licensed & Insured"
+    },
+    {
+      "href": "https://www.facebook.com/LumenHomeServices",
+      "icon": "facebook",
+      "sub": "Follow us",
+      "title": "Facebook"
+    },
+    {
+      "href": "https://www.instagram.com/lumenhomeservices.tx",
+      "icon": "instagram",
+      "sub": "Follow us",
+      "title": "Instagram"
+    }
+  ],
+  "ui": {
+    "consentText": "I agree to receive calls, texts, and emails from Lumen Home Services about my request. Msg & data rates may apply."
+  },
+  "serviceBlurbs": {
+    "air-duct-hvac": "Cleaner air, better airflow, and a system that runs the way it should.",
+    "chimney-fireplace": "Inspections, repairs, and sweeps that keep your fireplace safe to use.",
+    "dryer-vent": "Lint buildup is a leading cause of house fires — we clear it out.",
+    "additional": "Proper insulation for year-round comfort and lower energy bills."
+  }
+}
