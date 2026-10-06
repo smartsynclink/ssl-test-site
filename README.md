@@ -16,14 +16,16 @@ their Sanity project.
 2. **Fill in a config**: copy `site.config.example.yaml`, fill in the client's facts,
    and put any photos next to it. Facts only. Leave empty whatever the client
    hasn't confirmed.
-3. **Run the three commands**:
+3. **Run the commands**:
    - `/new-site <this repo's URL> <path/to/config.yaml>`: new local repo, new Sanity
      project, all copy written to the Blueprint, build verified, `REVIEW.md` for Shay.
    - `/push-site`: commits and pushes to a private GitHub repo.
    - `/deploy-site`: Vercel project, env vars, production deploy, smoke test.
-4. **By hand** (the commands list these): add the GHL token to `.env.local`,
-   create the Sanity webhook, point the domain's DNS, run the GHL workflows and
-   a test lead named "TEST – delete me".
+   - `/connect-ghl`: links the quote form and the chat, reviews and booking widgets
+     to the client's GHL sub-account. Run it whenever Shay has set GHL up; it
+     doesn't block a deploy, only the launch.
+4. **By hand** (the commands list these): create the Sanity webhook, point the
+   domain's DNS, set up the GHL workflows, and send test leads named "TEST – delete me".
 
 Logins needed on the machine: `gh`, `vercel`, and Sanity (`pnpm exec sanity login`).
 
@@ -45,6 +47,7 @@ After launch, content is edited in Studio at `/studio`.
 | `scripts/build-site.mjs` | config + content → Sanity (dry run unless `--write`) |
 | `scripts/check-content.mjs` | checks what's in Sanity: section types, references, brand (`--self-test` for the check itself) |
 | `scripts/content-gaps.mjs` | lists every `[CONTENT NEEDED]` the running site shows |
+| `scripts/set-integrations.mjs` | copies the config's GHL widget IDs into Site Settings without a rebuild |
 | `scripts/publish-drafts.mjs` | publishes reviewed Studio drafts in one go |
 | `scripts/ghl-check.mjs` | lists a GHL location's pipelines and stage IDs (read-only) |
 

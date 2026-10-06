@@ -90,9 +90,8 @@ GHL_PIPELINE_STAGE_ID=<setup.ghl.stageId>
 ```
 
 Leave out GHL lines whose value is empty. Record `setup.sanityProjectId` in
-`site.config.yaml`. Tell the user to add `GHL_PRIVATE_INTEGRATION_TOKEN=...` to
-`.env.local` themselves (GHL → Settings → Private Integrations); until then the
-quote form asks visitors to call.
+`site.config.yaml`. Don't ask for a GHL token here: GHL is connected separately with
+`/connect-ghl`, before or after deploying. Until then the quote form asks visitors to call.
 
 ## 4. Gather the business context
 

@@ -18,8 +18,8 @@ Read `site.config.yaml` for `setup.*` throughout.
   on GitHub. If not, tell the user to run `/push-site` first.
 - `.env.local` has `NEXT_PUBLIC_SANITY_PROJECT_ID`, `SANITY_API_READ_TOKEN` and
   `SANITY_REVALIDATE_SECRET`. If `GHL_PRIVATE_INTEGRATION_TOKEN` or any `GHL_*`
-  ID is missing, warn: the quote form will ask visitors to call until they are added
-  and the site is redeployed. Carry on.
+  ID is missing, say so: the quote form asks visitors to call until `/connect-ghl`
+  is run. Carry on; GHL doesn't block a deploy, only the launch.
 - `vercel whoami` works; otherwise ask the user to run `vercel login` in their own
   terminal. Never handle their password.
 - Team: `setup.vercelTeam`. If empty, run `vercel teams ls`, ask the user which
