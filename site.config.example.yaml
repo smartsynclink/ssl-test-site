@@ -72,6 +72,12 @@ reviews:
     source:                 # Google, Yelp, Facebook ...
     quote: >-
 
+# The client's own FAQs, word for word. /new-site uses these first and only
+# writes extra questions where a page needs more.
+faqs:
+  - question:
+    answer: >-
+
 # Public IDs the site shows. Empty = that feature stays hidden.
 integrations:
   chatWidgetId:             # GHL chat widget ID

@@ -40,12 +40,14 @@ way you can't fix yourself; never skip a check to get to the end.
 git clone --depth 1 <template-url> <target> && cd <target>
 rm -rf .git && git init -q -b main
 # template-only files that don't belong in a client site
-rm -rf plugin .claude-plugin clients public/video public/img kit/test.config.yaml
+rm -rf plugin .claude-plugin clients public/video public/img kit/test.config.yaml kit/test-submission.md
 ```
 
 Copy the config to `<target>/site.config.yaml`. If it references images, copy
 each referenced file too, keeping the same relative paths, so the paths in the
-config still resolve from its new location. Then `pnpm install`.
+config still resolve from its new location. Then `pnpm install`. Check the config before
+anything else: `node scripts/build-site.mjs --config site.config.yaml --config-only`.
+If it reports problems, fix the config (or ask the user) before going on.
 
 ## 3. Create the client's Sanity project
 
@@ -113,7 +115,9 @@ Read first, in the new repo:
 Write, in the new repo:
 - `content/settings.json` -- like the example: nav, footer, legal links, footer note,
   trust items, badges, consent text (`ui.consentText`), `serviceBlurbs` (one per service id).
-- `content/faqs.json` -- the shared FAQ library: `[{ id, question, answer }]`.
+- `content/faqs.json` -- the shared FAQ library: `[{ id, question, answer }]`. Start with
+  the config's `faqs`, copied word for word (they are the client's own answers); write
+  more only where a page needs them, from facts in the config.
 - `content/pages/<slug>.json` -- one per page: `home` (with `"isHome": true`), one per
   service (`slug` = the service's slug), one per area (`slug` = the area's slug), and
   `about`, `contact`, `faqs`, `projects`, `privacy-policy`, `terms`.

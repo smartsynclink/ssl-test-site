@@ -13,9 +13,11 @@ their Sanity project.
    /plugin marketplace add smartsynclink/ssl-test-site
    /plugin install site-builder@smartsynclink
    ```
-2. **Fill in a config**: copy `site.config.example.yaml`, fill in the client's facts,
-   and put any photos next to it. Facts only. Leave empty whatever the client
-   hasn't confirmed.
+2. **Make the config** from the client's onboarding-form submission:
+   `/make-config <submission file or Notion URL>` writes `~/Clients/<slug>/site.config.yaml`
+   and a `MISSING.md` of what the form didn't give us. (Or copy
+   `site.config.example.yaml` and fill it in by hand.) Facts only: anything not
+   confirmed stays empty.
 3. **Run the commands**:
    - `/new-site <this repo's URL> <path/to/config.yaml>`: new local repo, new Sanity
      project, all copy written to the Blueprint, build verified, `REVIEW.md` for Shay.

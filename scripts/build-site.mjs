@@ -21,7 +21,8 @@
  *
  * Usage: node --env-file=.env.local scripts/build-site.mjs [--write] [--force]
  *        [--config site.config.yaml] [--content content] [--out docs.json]
- *   --force  overwrite a dataset that already has a site (replaces Studio edits)
+ *   --force        overwrite a dataset that already has a site (replaces Studio edits)
+ *   --config-only  check just the config (what /make-config writes), before any content exists
  */
 import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -46,9 +47,10 @@ const fail = msg => problems.push(msg);
 const readJson = p => JSON.parse(readFileSync(p, 'utf8'));
 
 const config = parse(readFileSync(CONFIG, 'utf8'));
-const settingsCopy = readJson(`${CONTENT}/settings.json`);
-const faqs = readJson(`${CONTENT}/faqs.json`);
-const pages = readdirSync(`${CONTENT}/pages`).filter(f => f.endsWith('.json')).sort()
+const CONFIG_ONLY = process.argv.includes('--config-only');
+const settingsCopy = CONFIG_ONLY ? {} : readJson(`${CONTENT}/settings.json`);
+const faqs = CONFIG_ONLY ? [] : readJson(`${CONTENT}/faqs.json`);
+const pages = CONFIG_ONLY ? [] : readdirSync(`${CONTENT}/pages`).filter(f => f.endsWith('.json')).sort()
   .map(f => readJson(`${CONTENT}/pages/${f}`));
 
 const slugify = s => String(s).toLowerCase().normalize('NFKD')
@@ -86,6 +88,17 @@ const files = new Set();
 const file = p => { if (!p) return undefined; const abs = resolve(base, p); if (!existsSync(abs)) fail(`config: image not found: ${p}`); files.add(abs); return abs; };
 // Placeholder until upload: { __file } is swapped for a real asset reference in --write.
 const img = (p, extra = {}) => (p ? { _type: 'image', __file: file(p), ...extra } : undefined);
+for (const q of config.faqs ?? []) if (!q.question || !q.answer) fail('config: every faq needs a question and an answer');
+
+if (CONFIG_ONLY) {
+  [images.logo, images.cta, ...(images.hero ?? []), ...Object.values(images.services ?? {}), ...Object.values(images.pages ?? {}),
+    ...(images.projects ?? []).flatMap(p => [p.before, p.after]), ...(images.videos ?? []).flatMap(v => [v.file, v.poster]),
+    ...Object.values(images.photos ?? {}).flat().map(ph => ph.file)].forEach(file);
+  console.log(problems.length
+    ? `✗ ${problems.length} problem(s):\n  ${problems.join('\n  ')}`
+    : `✓ config valid: ${services.length} services, ${areas.length} areas, ${reviews.length} reviews, ${(config.faqs ?? []).length} faqs`);
+  process.exit(problems.length ? 1 : 0);
+}
 
 // ---------- documents ----------
 const reviewId = author => `review-${slugify(author)}`;
