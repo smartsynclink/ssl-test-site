@@ -100,9 +100,20 @@ In the output folder, short and scannable:
 ## For launch, not the website    (domain registrar; domain used for email → keep its MX records when
                                    changing DNS; GA/GTM/Pixel "already have" → ask for the IDs; GHL → GHL Setup Guide)
 ## Ignored                        (one line: AI assistant, booking, Tax ID / CP 575, automation answers)
+## Message for the client         (ready for Shay to paste into an email or text, see below)
 ```
 
-Only list what applies to this client.
+Only list what applies to this client. MISSING.md is for Shay: the sections above are
+his checklist.
+
+**Message for the client** is the one part written to the client. It's a short, friendly
+note in plain words (no "config", "CHECK", "slug" or technical terms), addressed by the
+contact's first name. It lists only what the client can answer: skipped questions,
+things the form didn't ask, photos to send, and a quick yes/no on CHECK items they'd know
+(e.g. "Should your street address show on the website?", "Is (555) 010-0199 the number
+customers should call?"). Leave out launch notes, ignored answers and anything Shay
+decides himself. End with how to reply (just answer this message, or send photos to the
+Drive folder).
 
 ## 5. Check and report
 
